@@ -18,10 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "react": "~0.14.0",
-    "elemental": "elementalui#~0.0.2",
     "jquery": "~2.1.4",
-    "bootstrap": "~3.3.5",
-    "moment": "~2.10.6"
+    "bootstrap": "~3.3.5"
   }
 }

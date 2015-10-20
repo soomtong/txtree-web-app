@@ -1,3 +1,6 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 var menuData = {
     title: 'Txtree',
     version: '1.0',

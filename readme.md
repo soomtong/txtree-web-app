@@ -6,6 +6,12 @@ inspirited by [Bootstrap Expo](http://expo.getbootstrap.com/)
 
 ## development
 
+prepare browserify, babelify with npm
+
+### script
+
+> browserify -t babelify  script/*.jsx -o build/build.js
+
 ### assist in webstorm
 
 use code reference from 

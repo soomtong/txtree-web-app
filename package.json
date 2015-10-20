@@ -1,0 +1,28 @@
+{
+  "name": "txtree-web-app",
+  "version": "1.0.0",
+  "description": "web client for txtree service (with haroo cloud core)",
+  "main": "build.js",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "moment": "^2.10.6",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soomtong/txtree-web-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soomtong/txtree-web-app/issues"
+  },
+  "homepage": "https://github.com/soomtong/txtree-web-app#readme"
+}
