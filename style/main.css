@@ -1,12 +1,15 @@
 /*
  * Global resets
  */
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
 
 html {
     font-size: 18px;
 }
 
 body {
+    font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif';
     font-size: 1rem;
     line-height: 1.4;
     background-color: #fafafa;
@@ -29,10 +32,10 @@ h1, h2, h3 {
     padding: 1.5rem;
 }
 .masthead a {
-    color: #6a6a6a;
+    color: #eaeaea;
 }
 .masthead a:hover {
-    color: #3a3a3a;
+    color: #979797;
 }
 
 /* Masthead (headings and download button) */
@@ -76,7 +79,7 @@ h1, h2, h3 {
 
 /* Dividers */
 .masthead-hr {
-    width: 130px;
+    width: 90%;
     margin: 1rem 0;
     border-top-color: #eee;
     border-bottom: 0;
@@ -136,7 +139,6 @@ h1, h2, h3 {
     margin-left: 145px !important;
     width: auto !important;
     height: auto !important;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 .txtree-ad-text {
     padding-top: 0 !important;
