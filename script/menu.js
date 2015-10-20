@@ -1,4 +1,4 @@
-var TxtreeData = {
+var menuData = {
     title: 'Txtree',
     version: '1.0',
     menu1: [
@@ -42,6 +42,27 @@ var TxtreeData = {
             active: false
         }
     ],
+    menu4: [
+        {
+            title: 'Newest',
+            link: './newest'
+        },
+        {
+            title: 'Hottest',
+            link: './hottest'
+        },
+        {
+            title: 'Coldest',
+            link: './coldest'
+        },
+        {
+            title: 'hr1'
+        },
+        {
+            title: 'Oldest',
+            link: './oldest'
+        }
+    ],
     menuLink: function (active) {
         return active ? 'nav-link nav-link-active' : 'nav-link';
     }
@@ -52,7 +73,7 @@ var Title = React.createClass({
     render: function () {
         return (
             <h1 className="masthead-title">
-                <a href="/">{TxtreeData.title}</a>
+                <a href="/">{menuData.title}</a>
             </h1>
         );
     }
@@ -72,8 +93,8 @@ var Nav = React.createClass({
     render: function () {
         var linkNodes = this.props.data.map(function (menu) {
             return (
-                <li className="nav-item" key={ menu.link }>
-                    <a className={ TxtreeData.menuLink(menu.active) } href={ menu.link }>{ menu.title }</a>
+                <li className="nav-item" key={menu.title}>
+                    <a className={menuData.menuLink(menu.active)} href={menu.link}>{menu.title}</a>
                 </li>
             );
         });
@@ -87,17 +108,25 @@ var Nav = React.createClass({
 
 var ListOrder = React.createClass({
     render: function () {
+        var listNodes = this.props.data.map(function (menu) {
+            if (menu.link) {
+                return (
+                    <li key={menu.title}>
+                        <a href={menu.link}>{menu.title}</a>
+                    </li>
+                );
+            } else {
+                return (
+                    <li role="separator" className="divider" key={menu.title}></li>
+                );
+            }
+        });
         return (
             <div className="btn-group">
-                <button type="button" className="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">List Order <span className="caret"></span>
+                <button type="button" className="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Order <span className="caret"></span>
                 </button>
                 <ul className="dropdown-menu">
-                    <li><a href="#">Newest</a></li>
-                    <li><a href="#">Hottest</a></li>
-                    <li><a href="#">Coldest</a></li>
-                    <li role="separator" className="divider"></li>
-                    <li><a href="#">Oldest</a></li>
+                    {listNodes}
                 </ul>
             </div>
         );
@@ -123,12 +152,12 @@ var MenuBox = React.createClass({
                 <Title />
                 <Lead />
                 <hr className="masthead-hr" />
-                <Nav data={ TxtreeData.menu1 } />
+                <Nav data={menuData.menu1} />
                 <hr className="masthead-hr" />
-                <Nav data={ TxtreeData.menu2 } />
-                <ListOrder />
+                <Nav data={menuData.menu2} />
+                <ListOrder data={menuData.menu4}/>
                 <hr className="masthead-hr" />
-                <Nav data={ TxtreeData.menu3 } />
+                <Nav data={menuData.menu3} />
                 <hr className="masthead-hr" />
                 <AdBox />
                 <hr className="masthead-hr visible-xs" />
