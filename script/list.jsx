@@ -3,27 +3,7 @@ var ReactDOM = require('react-dom');
 
 var Moment = require('moment');
 
-var listData = {
-    list: [
-        {
-            _id: "1",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium amet commodi,eius eligendi enim fugit harum neque officiis sit tempore tenetur veniam voluptas! Dolores earumexcepturi illo incidunt reiciendis.",
-            title: "a new title",
-            created_at: Date.now()
-        },
-        {
-            _id: "2",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium amet commodi,eius eligendi enim fugit harum neque officiis sit tempore tenetur veniam voluptas! Dolores earumexcepturi illo incidunt reiciendis.",
-            title: "a new title",
-            created_at: Date.now()
-        },
-        {
-            _id: "3",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium amet commodi,eius eligendi enim fugit harum neque officiis sit tempore tenetur veniam voluptas! Dolores earumexcepturi illo incidunt reiciendis.",
-            created_at: Date.now()
-        }
-    ]
-};
+var Common = require('./common.jsx');
 
 var Entry = React.createClass({
     render: function () {
@@ -76,7 +56,7 @@ var EntryList = React.createClass({
 var ListBox = React.createClass({
     render: function() {
         return (
-            <EntryList data={listData.list}/>
+            <EntryList data={Common.list.list}/>
         );
     }
 });

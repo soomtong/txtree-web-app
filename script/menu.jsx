@@ -1,82 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var menuData = {
-    title: 'Txtree',
-    version: '1.0',
-    menu1: [
-        {
-            title: 'Home',
-            link: './',
-            active: true
-        },
-        {
-            title: 'Curate',
-            link: './curate',
-            active: false
-        },
-        {
-            title: 'Favorite',
-            link: './favorite',
-            active: false
-        }
-    ],
-    menu2: [
-        {
-            title: 'Create New Document',
-            link: './create',
-            active: false
-        },
-        {
-            title: 'Search',
-            link: './search',
-            active: false
-        }
-    ],
-    menu3: [
-        {
-            title: 'About',
-            link: './about',
-            active: false
-        },
-        {
-            title: 'Bookmarklet',
-            link: './bookmarklet',
-            active: false
-        }
-    ],
-    menu4: [
-        {
-            title: 'Newest',
-            link: './newest'
-        },
-        {
-            title: 'Hottest',
-            link: './hottest'
-        },
-        {
-            title: 'Coldest',
-            link: './coldest'
-        },
-        {
-            title: 'hr1'
-        },
-        {
-            title: 'Oldest',
-            link: './oldest'
-        }
-    ],
-    menuLink: function (active) {
-        return active ? 'nav-link nav-link-active' : 'nav-link';
-    }
-
-};
+var Common = require('./common.jsx');
 
 var Title = React.createClass({
     render: function () {
         return (
             <h1 className="masthead-title">
-                <a href="/">{menuData.title}</a>
+                <a href="/">{Common.txtree.title}</a>
             </h1>
         );
     }
@@ -97,7 +28,7 @@ var Nav = React.createClass({
         var linkNodes = this.props.data.map(function (menu) {
             return (
                 <li className="nav-item" key={menu.title}>
-                    <a className={menuData.menuLink(menu.active)} href={menu.link}>{menu.title}</a>
+                    <a className={Common.menu.menuLink(menu.active)} href={menu.link}>{menu.title}</a>
                 </li>
             );
         });
@@ -155,12 +86,12 @@ var MenuBox = React.createClass({
                 <Title />
                 <Lead />
                 <hr className="masthead-hr" />
-                <Nav data={menuData.menu1} />
+                <Nav data={Common.menu.menu1} />
                 <hr className="masthead-hr" />
-                <Nav data={menuData.menu2} />
-                <ListOrder data={menuData.menu4}/>
+                <Nav data={Common.menu.menu2} />
+                <ListOrder data={Common.menu.menu4}/>
                 <hr className="masthead-hr" />
-                <Nav data={menuData.menu3} />
+                <Nav data={Common.menu.menu3} />
                 <hr className="masthead-hr" />
                 <AdBox />
                 <hr className="masthead-hr visible-xs" />
