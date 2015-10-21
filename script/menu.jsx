@@ -17,7 +17,7 @@ var Lead = React.createClass({
     render: function () {
         return (
             <p className="masthead-lead">
-                Some anonymous documents of <a href="http://txtree.net">Txtree</a> hosted by <a href="http://haroocloud.com">Haroo Cloud</a>.
+                Some anonymous documents of <a href="http://txtree.net">{Common.txtree.title}</a> hosted by <a href="http://haroocloud.com">Haroo Cloud</a>
             </p>
         );
     }

@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Moment = require('moment');
+var Request = require('superagent');
 
 var Common = require('./common.jsx');
 
@@ -38,9 +39,20 @@ var Entry = React.createClass({
     }
 });
 
+var PageNav = React.createClass({
+    render: function () {
+        return (
+            <div className="paginator">
+                <a href="/3" className="paginate older">Older</a>
+                <a href="/1" className="paginate newer">Newer</a>
+            </div>
+        );
+    }
+});
+
 var EntryList = React.createClass({
     render: function () {
-        var entryNodes = this.props.data.map(function (item) {
+        var entryNodes = this.props.list.map(function (item) {
             return (
                 <Entry data={item} key={item._id} />
             );
@@ -48,17 +60,45 @@ var EntryList = React.createClass({
         return (
             <div className="listing">
                 {entryNodes}
+                <PageNav pageNow={this.props.page.thisPage} pageTotal={this.props.page.totalPage}/>
             </div>
         );
     }
 });
 
 var ListBox = React.createClass({
+    getInitialState: function () {
+        return {
+            list: [],
+            page: {
+                now: 1,
+                total: 1
+            }
+        }
+    },
+    componentDidMount: function() {
+        Request.post('./api/pet.json')
+            .send({ page: 1 })
+            .set('X-API-Key', 'foobar')
+            .set('Accept', 'application/json')
+            .end(function(error, result){
+                // Calling the end function will send the request
+                if (this.isMounted()) {
+                    this.setState({
+                        page: {
+                            now: result.body.thisPage,
+                            total: result.body.totalPage
+                        },
+                        list: result.body.data
+                    });
+                }
+            }.bind(this));
+    },
     render: function() {
         return (
-            <EntryList data={Common.list.list}/>
+            <EntryList list={this.state.list} page={this.state.page} />
         );
     }
 });
 
-ReactDOM.render(<ListBox />, document.getElementById('txtree_list'));
+ReactDOM.render(<ListBox page={Common.txtree.page}/>, document.getElementById('txtree_list'));

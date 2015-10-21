@@ -8,13 +8,17 @@ inspirited by [Bootstrap Expo](http://expo.getbootstrap.com/)
 
 prepare browserify, babelify with npm
 
-### script
+### build script
 
 > browserify -t babelify  script/*.jsx -o script/build.js
 
 or 
 
 > gulp browserify
+
+### build stylesheet
+
+> gulp stylesheet
 
 ### assist in webstorm
 
