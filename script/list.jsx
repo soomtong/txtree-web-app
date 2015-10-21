@@ -41,10 +41,19 @@ var Entry = React.createClass({
 
 var PageNav = React.createClass({
     render: function () {
+        var next, prev;
+
+        if (this.props.now > 1) {
+            prev = <a href={this.props.now - 1} className="paginate newer">Newer</a>;
+        }
+        if (this.props.total > this.props.now) {
+            next = <a href={this.props.now + 1} className="paginate older">Older</a>;
+        }
+
         return (
             <div className="paginator">
-                <a href="/3" className="paginate older">Older</a>
-                <a href="/1" className="paginate newer">Newer</a>
+                {prev}
+                {next}
             </div>
         );
     }
@@ -60,7 +69,7 @@ var EntryList = React.createClass({
         return (
             <div className="listing">
                 {entryNodes}
-                <PageNav pageNow={this.props.page.thisPage} pageTotal={this.props.page.totalPage}/>
+                <PageNav now={this.props.page.now} total={this.props.page.total}/>
             </div>
         );
     }
