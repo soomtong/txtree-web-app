@@ -10,7 +10,11 @@ prepare browserify, babelify with npm
 
 ### script
 
-> browserify -t babelify  script/*.jsx -o build/build.js
+> browserify -t babelify  script/*.jsx -o script/build.js
+
+or 
+
+> gulp browserify
 
 ### assist in webstorm
 

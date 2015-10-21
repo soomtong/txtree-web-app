@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var Moment = require('moment');
+
 var listData = {
     list: [
         {
@@ -25,7 +27,7 @@ var listData = {
 
 var Entry = React.createClass({
     render: function () {
-        var title, text, createdAt;
+        var title, text, createdAt, time;
 
         if (this.props.data.title) {
             title = <h2 className="entry-title"><a href="/">{this.props.data.title}</a></h2>;
@@ -38,7 +40,9 @@ var Entry = React.createClass({
         text = <p>{this.props.data.text}</p>;
 
         // use moment by require with browserify
-        createdAt = <p className="entry-date">{Date(this.props.data.created_at)}</p>;
+        // todo: dynamic update for past time
+        time = Moment(this.props.date).format('h:mm:ss a');
+        createdAt = <p className="entry-date">{time}</p>;
 
         return (
             <div className="entry">
