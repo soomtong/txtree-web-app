@@ -28,6 +28,7 @@ use code reference from
     
 ## todo
 
+- [ ] bind txtree server
 - [ ] load list from cloud
 - [ ] patch list from cloud by pagination
 - [ ] load today list from cloud

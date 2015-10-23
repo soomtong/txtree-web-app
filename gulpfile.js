@@ -22,4 +22,4 @@ gulp.task('stylesheet', function () {
         .pipe(gulp.dest('style'));
 });
 
-gulp.task('default', ['browserify']);
+gulp.task('default', ['browserify', 'stylesheet']);

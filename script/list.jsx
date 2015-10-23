@@ -43,17 +43,25 @@ var PageNav = React.createClass({
     render: function () {
         var next, prev;
 
-        if (this.props.now > 1) {
-            prev = <a href={this.props.now - 1} className="paginate newer">Newer</a>;
+        if (this.props.now > 0) {
+            if (this.props.now == 1) {
+                prev = <a href='./' className="paginate newer">Newer</a>;
+            } else {
+                prev = <a href={this.props.now - 1} className="paginate newer">Newer</a>;
+            }
+        } else {
+            prev = <span className="paginate previous">Newer</span>;
         }
         if (this.props.total > this.props.now) {
-            next = <a href={this.props.now + 1} className="paginate older">Older</a>;
+            next = <a href={Number(this.props.now) + 1} className="paginate older">Older</a>;
+        } else {
+            next = <span className="paginate next">Older</span>;
         }
 
         return (
             <div className="paginator">
-                {prev}
                 {next}
+                {prev}
             </div>
         );
     }
@@ -80,27 +88,50 @@ var ListBox = React.createClass({
         return {
             list: [],
             page: {
-                now: 1,
-                total: 1
+                now: 0,
+                total: 0
             }
         }
     },
     componentDidMount: function() {
-        Request.post('./api/pet.json')
-            .send({ page: 1 })
-            .set('X-API-Key', 'foobar')
+        Request.get(Common.txtree.server + 'list')
+            //.withCredentials()
+            .query({ p: this.props.page, s: 2, order: 'newest' })
+            //.set('x-access-host', 'txtree')
+            //.set('Access-Control-Allow-Origin', '*')
+            //.set('Access-Control-Allow-Credentials', 'true')
             .set('Accept', 'application/json')
             .end(function(error, result){
-                // Calling the end function will send the request
-                if (this.isMounted()) {
+
+                if (error) {
                     this.setState({
                         page: {
-                            now: result.body.thisPage,
-                            total: result.body.totalPage
+                            now: 0,
+                            total: Common.list.totalPage
                         },
-                        list: result.body.data
+                        list: Common.list.data
                     });
-                }
+                } else {
+                    var data = result.body.data;
+
+                    if (this.isMounted()) {
+                        this.setState({
+                            page: {
+                                now: data.now,
+                                total: data.total
+                            },
+                            list: data.list
+                        });
+                    } else {
+                        this.setState({
+                            page: {
+                                now: 0,
+                                total: Common.list.totalPage
+                            },
+                            list: Common.list.data
+                        });
+                    }
+                }               // Calling the end function will send the request
             }.bind(this));
     },
     render: function() {
@@ -110,4 +141,4 @@ var ListBox = React.createClass({
     }
 });
 
-ReactDOM.render(<ListBox page={Common.txtree.page}/>, document.getElementById('txtree_list'));
+ReactDOM.render(<ListBox page='1' />, document.getElementById('txtree_list'));

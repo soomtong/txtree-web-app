@@ -1,7 +1,7 @@
 var txtreeData = {
     title: 'Txtree',
     version: '1.0',
-    page: 0
+    server: 'http://localhost:3030/api/tree/'
 };
 
 var menuData = {
@@ -74,30 +74,13 @@ var menuData = {
 };
 
 var listData = {
-    totalPage: 40,
+    totalPage: 1,
     thisPage: 1,
     data: [
         {
             _id: "1",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium amet commodi,eius eligendi enim fugit harum neque officiis sit tempore tenetur veniam voluptas! Dolores earumexcepturi illo incidunt reiciendis.",
-            title: "a new title",
-            created_at: Date.now()
-        },
-        {
-            _id: "2",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium amet commodi,eius eligendi enim fugit harum neque officiis sit tempore tenetur veniam voluptas! Dolores earumexcepturi illo incidunt reiciendis.",
-            title: "a new title",
-            created_at: Date.now()
-        },
-        {
-            _id: "4",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium amet commodi,eius eligendi enim fugit harum neque officiis sit tempore tenetur veniam voluptas! Dolores earumexcepturi illo incidunt reiciendis.",
-            title: "a new title",
-            created_at: Date.now()
-        },
-        {
-            _id: "3",
-            text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus accusantium amet commodi,eius eligendi enim fugit harum neque officiis sit tempore tenetur veniam voluptas! Dolores earumexcepturi illo incidunt reiciendis.",
+            text: "Check api server status",
+            title: "No Server Connected",
             created_at: Date.now()
         }
     ]
