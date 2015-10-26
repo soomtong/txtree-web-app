@@ -26,6 +26,12 @@ use code reference from
 
     Preference > language & framework javascript > library > download from typescript community
     
+#### careful for web server in webstorm
+
+react router is not match for '/project-name-in-webstorm/index.html' to '/index.html' (root) for this index.html
+
+use simple web server to access directly for root. something like 'http-serve' or 'locally' 
+    
 ## todo
 
 - [x] bind txtree server

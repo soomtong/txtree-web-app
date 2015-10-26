@@ -12,7 +12,7 @@ var NotFound = Router.NotFound;
 var MainPage = React.createClass({
     render: function () {
         return (
-            <List page={this.props.page || '0'} />
+            <List load={this.props.page || '0'} />
         );
     }
 });
@@ -24,7 +24,7 @@ var App = React.createClass({
                 <Menu />
                 <Locations>
                     <Location path="/" handler={MainPage} />
-                    <Location path="/:page" handler={MainPage} />
+                    <Location path="/page/:page" handler={MainPage} />
                 </Locations>
             </div>
         );

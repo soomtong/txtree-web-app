@@ -48,17 +48,17 @@ var PageNav = React.createClass({
 
         if (this.props.now > 0) {
             if (this.props.now == 1) {
-                prev = <a href='./' className="paginate newer">Newer</a>;
+                prev = <Link href='/' className="paginate newer">Newer</Link>;
             } else {
                 //prev = <a href={this.props.now - 1} className="paginate newer">Newer</a>;
-                prev = <Link href={`${Number(this.props.now) - 1}`} className="paginate newer">Newer</Link>;
+                prev = <Link href={'/page/' + `${Number(this.props.now) - 1}`} className="paginate newer">Newer</Link>;
             }
         } else {
             prev = <span className="paginate previous">Newer</span>;
         }
         if (this.props.total > this.props.now) {
             //next = <a href={Number(this.props.now) + 1} className="paginate older">Older</a>;
-            next = <Link href={`${Number(this.props.now) + 1}`} className="paginate older">Older</Link>;
+            next = <Link href={'/page/' + `${Number(this.props.now) + 1}`} className="paginate older">Older</Link>;
         } else {
             next = <span className="paginate next">Older</span>;
         }
@@ -99,46 +99,32 @@ var ListBox = React.createClass({
         }
     },
     componentDidMount: function() {
+        console.log('mount :', this.props.load);
+
         Request.get(Common.txtree.entryPoint + 'list')
             //.withCredentials()
-            .query({ p: this.props.page, s: Common.txtree.pageSize, order: 'newest' })
+            .query({ p: this.props.load, s: Common.txtree.pageSize, order: 'newest' })
             //.set('x-access-host', 'txtree')
             //.set('Access-Control-Allow-Origin', '*')
             //.set('Access-Control-Allow-Credentials', 'true')
             .set('Accept', 'application/json')
-            .end(function(error, result){
-                if (error) {
-                    this.setState({
-                        page: {
-                            now: 0,
-                            total: Common.list.totalPage
-                        },
-                        list: Common.list.data
-                    });
-                } else {
-                    var data = result.body.data;
+            .end(UpdateList.bind(this));
+    },
+    componentWillReceiveProps: function () {
+        console.log('receive :', this.props.load);
 
-                    if (this.isMounted() && data.count !== 0) {
-                        this.setState({
-                            page: {
-                                now: data.now,
-                                total: data.total
-                            },
-                            list: data.list
-                        });
-                    } else {
-                        this.setState({
-                            page: {
-                                now: 0,
-                                total: Common.list.totalPage
-                            },
-                            list: Common.list.data
-                        });
-                    }
-                }               // Calling the end function will send the request
-            }.bind(this));
+        Request.get(Common.txtree.entryPoint + 'list')
+            //.withCredentials()
+            .query({ p: this.props.load, s: Common.txtree.pageSize, order: 'newest' })
+            //.set('x-access-host', 'txtree')
+            //.set('Access-Control-Allow-Origin', '*')
+            //.set('Access-Control-Allow-Credentials', 'true')
+            .set('Accept', 'application/json')
+            .end(UpdateList.bind(this));
     },
     render: function() {
+        console.log('render : ', this.props.load);
+
         return (
             <EntryList list={this.state.list} page={this.state.page} />
         );
@@ -147,3 +133,35 @@ var ListBox = React.createClass({
 
 module.exports = ListBox;
 //ReactDOM.render(<ListBox page='1' />, document.getElementById('txtree_list'));
+
+function UpdateList(error, result) {
+    if (error) {
+        this.setState({
+            page: {
+                now: 0,
+                total: Common.list.totalPage
+            },
+            list: Common.list.data
+        });
+    } else {
+        var data = result.body.data;
+
+        if (this.isMounted() && data.count !== 0) {
+            this.setState({
+                page: {
+                    now: data.now,
+                    total: data.total
+                },
+                list: data.list
+            });
+        } else {
+            this.setState({
+                page: {
+                    now: 0,
+                    total: Common.list.totalPage
+                },
+                list: Common.list.data
+            });
+        }
+    }               // Calling the end function will send the request
+}
