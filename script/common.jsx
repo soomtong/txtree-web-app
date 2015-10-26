@@ -87,42 +87,8 @@ var listData = {
     ]
 };
 
-var updateList = function (error, result) {
-    console.log(result);
-    if (error) {
-        this.setState({
-            page: {
-                now: 0,
-                total: listData.totalPage
-            },
-            list: listData.data
-        });
-    } else {
-        var data = result.body.data;
-
-        if (this.isMounted() && data.count !== 0) {
-            this.setState({
-                page: {
-                    now: data.now,
-                    total: data.total
-                },
-                list: data.list
-            });
-        } else {
-            this.setState({
-                page: {
-                    now: 0,
-                    total: listData.totalPage
-                },
-                list: listData.data
-            });
-        }
-    }               // Calling the end function will send the request
-};
-
 module.exports = {
     txtree: txtreeData,
     menu: menuData,
-    list: listData,
-    updateList: updateList
+    list: listData
 };

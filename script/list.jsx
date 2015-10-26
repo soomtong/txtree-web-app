@@ -50,7 +50,6 @@ var PageNav = React.createClass({
     render: function () {
         var next, prev, now = this.props.now || 0;
 
-        console.log('now : ' , now);
         if (now > 0) {
             if (now == 1) {
                 prev = <Link href='/' className="paginate newer">Newer</Link>;
@@ -93,15 +92,46 @@ var EntryList = React.createClass({
 });
 
 var ListBox = React.createClass({
-    loadFromServer: function () {
+    updateList: function (error, result) {
+        if (error) {
+            this.setState({
+                page: {
+                    now: 0,
+                    total: Common.list.totalPage
+                },
+                list: Common.list.data
+            });
+        } else {
+            var data = result.body.data;
+
+            if (this.isMounted() && data.count !== 0) {
+                this.setState({
+                    page: {
+                        now: data.now,
+                        total: data.total
+                    },
+                    list: data.list
+                });
+            } else {
+                this.setState({
+                    page: {
+                        now: 0,
+                        total: Common.list.totalPage
+                    },
+                    list: Common.list.data
+                });
+            }
+        }               // Calling the end function will send the request
+    },
+    loadFromServer: function (page) {
         Request.get(Common.txtree.entryPoint + 'list')
             //.withCredentials()
-            .query({ p: this.props.page, s: Common.list.pageSize, order: 'newest' })
+            .query({ p: page, s: Common.list.pageSize, order: 'newest' })
             //.set('x-access-host', 'txtree')
             //.set('Access-Control-Allow-Origin', '*')
             //.set('Access-Control-Allow-Credentials', 'true')
             .set('Accept', 'application/json')
-            .end(Common.updateList.bind(this));
+            .end(this.updateList);
     },
     getInitialState: function () {
         return {
@@ -113,50 +143,17 @@ var ListBox = React.createClass({
         }
     },
     componentDidMount: function() {
-        console.log('mount :', this.props.page);
-        this.loadFromServer();
+        this.loadFromServer(this.props.page);
+    },
+    componentWillReceiveProps: function (nextProps) {
+        this.loadFromServer(nextProps.page);
     },
     render: function() {
-        console.log('render : ', this.props.page);
-
         return (
             <EntryList list={this.state.list} page={this.state.page} now={this.props.page} />
         );
     }
 });
-
-/*
-var ListBoxWithPage = React.createClass({
-    getInitialState: function () {
-        return {
-            list: [],
-            page: {
-                now: 0,
-                total: 0
-            }
-        }
-    },
-    componentDidMount: function() {
-        console.log('mount :', this.props.page);
-
-        Request.get(Common.txtree.entryPoint + 'list')
-            //.withCredentials()
-            .query({ p: this.props.page, s: Common.list.pageSize, order: 'newest' })
-            //.set('x-access-host', 'txtree')
-            //.set('Access-Control-Allow-Origin', '*')
-            //.set('Access-Control-Allow-Credentials', 'true')
-            .set('Accept', 'application/json')
-            .end(Common.updateList.bind(this));
-    },
-    render: function() {
-        console.log('render : ', this.props.page);
-
-        return (
-            <EntryList list={this.state.list} page={this.state.page} now={this.props.page} />
-        );
-    }
-});
-*/
 
 var List = React.createClass({
     render: function() {
