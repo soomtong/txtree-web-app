@@ -2,7 +2,7 @@ var txtreeData = {
     title: 'Txtree',
     version: '1.0',
     entryPoint: 'http://localhost:3030/api/tree/',
-    pageSize: 3
+    pageSize: 2
 };
 
 var menuData = {
@@ -88,13 +88,14 @@ var listData = {
 };
 
 var updateList = function (error, result) {
+    console.log(result);
     if (error) {
         this.setState({
             page: {
                 now: 0,
-                total: Common.list.totalPage
+                total: listData.totalPage
             },
-            list: Common.list.data
+            list: listData.data
         });
     } else {
         var data = result.body.data;
@@ -111,9 +112,9 @@ var updateList = function (error, result) {
             this.setState({
                 page: {
                     now: 0,
-                    total: Common.list.totalPage
+                    total: listData.totalPage
                 },
-                list: Common.list.data
+                list: listData.data
             });
         }
     }               // Calling the end function will send the request
