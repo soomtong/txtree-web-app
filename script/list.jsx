@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+
 var Router = require('react-router-component');
 
 var Moment = require('moment');
@@ -7,6 +8,9 @@ var Request = require('superagent');
 
 var Common = require('./common.jsx');
 
+var Locations = Router.Locations;
+var Location = Router.Location;
+var NotFound = Router.NotFound;
 var Link = Router.Link;
 
 var Entry = React.createClass({
@@ -108,7 +112,7 @@ var ListBox = React.createClass({
             //.set('Access-Control-Allow-Origin', '*')
             //.set('Access-Control-Allow-Credentials', 'true')
             .set('Accept', 'application/json')
-            .end(UpdateList.bind(this));
+            .end(Common.updateList.bind(this));
     },
     componentWillReceiveProps: function () {
         console.log('receive :', this.props.load);
@@ -120,7 +124,7 @@ var ListBox = React.createClass({
             //.set('Access-Control-Allow-Origin', '*')
             //.set('Access-Control-Allow-Credentials', 'true')
             .set('Accept', 'application/json')
-            .end(UpdateList.bind(this));
+            .end(Common.updateList.bind(this));
     },
     render: function() {
         console.log('render : ', this.props.load);
@@ -131,37 +135,18 @@ var ListBox = React.createClass({
     }
 });
 
-module.exports = ListBox;
+//module.exports = ListBox;
 //ReactDOM.render(<ListBox page='1' />, document.getElementById('txtree_list'));
 
-function UpdateList(error, result) {
-    if (error) {
-        this.setState({
-            page: {
-                now: 0,
-                total: Common.list.totalPage
-            },
-            list: Common.list.data
-        });
-    } else {
-        var data = result.body.data;
+var List = React.createClass({
+    render: function() {
+        return (
+            <Locations>
+                <Location path="/" handler={ListBox}/>
+                <Location path="/page/:load" handler={ListBox}/>
+            </Locations>
+        );
+    }
+});
 
-        if (this.isMounted() && data.count !== 0) {
-            this.setState({
-                page: {
-                    now: data.now,
-                    total: data.total
-                },
-                list: data.list
-            });
-        } else {
-            this.setState({
-                page: {
-                    now: 0,
-                    total: Common.list.totalPage
-                },
-                list: Common.list.data
-            });
-        }
-    }               // Calling the end function will send the request
-}
+ReactDOM.render(<List />, document.getElementById('txtree_list'));

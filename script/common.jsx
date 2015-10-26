@@ -9,63 +9,63 @@ var menuData = {
     menu1: [
         {
             title: 'Home',
-            link: './',
+            link: '/',
             active: true
         },
         {
             title: 'Curate',
-            link: './curate',
+            link: '/curate',
             active: false
         },
         {
             title: 'Favorite',
-            link: './favorite',
+            link: '/favorite',
             active: false
         }
     ],
     menu2: [
         {
             title: 'Create New Document',
-            link: './create',
+            link: '/create',
             active: false
         },
         {
             title: 'Search',
-            link: './search',
+            link: '/search',
             active: false
         }
     ],
     menu3: [
         {
             title: 'About',
-            link: './about',
+            link: '/about',
             active: false
         },
         {
             title: 'Bookmarklet',
-            link: './bookmarklet',
+            link: '/bookmarklet',
             active: false
         }
     ],
     menu4: [
         {
             title: 'Newest',
-            link: './newest'
+            link: '/newest'
         },
         {
             title: 'Hottest',
-            link: './hottest'
+            link: '/hottest'
         },
         {
             title: 'Coldest',
-            link: './coldest'
+            link: '/coldest'
         },
         {
             title: 'hr1'
         },
         {
             title: 'Oldest',
-            link: './oldest'
+            link: '/oldest'
         }
     ],
     menuLink: function (active) {
@@ -87,8 +87,41 @@ var listData = {
     ]
 };
 
+var updateList = function (error, result) {
+    if (error) {
+        this.setState({
+            page: {
+                now: 0,
+                total: Common.list.totalPage
+            },
+            list: Common.list.data
+        });
+    } else {
+        var data = result.body.data;
+
+        if (this.isMounted() && data.count !== 0) {
+            this.setState({
+                page: {
+                    now: data.now,
+                    total: data.total
+                },
+                list: data.list
+            });
+        } else {
+            this.setState({
+                page: {
+                    now: 0,
+                    total: Common.list.totalPage
+                },
+                list: Common.list.data
+            });
+        }
+    }               // Calling the end function will send the request
+};
+
 module.exports = {
     txtree: txtreeData,
     menu: menuData,
-    list: listData
+    list: listData,
+    updateList: updateList
 };

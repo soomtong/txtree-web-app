@@ -100,5 +100,5 @@ var MenuBox = React.createClass({
     }
 });
 
-module.exports = MenuBox;
-//ReactDOM.render(<MenuBox />, document.getElementById('txtree_menu'));
+//module.exports = MenuBox;
+ReactDOM.render(<MenuBox />, document.getElementById('txtree_menu'));
