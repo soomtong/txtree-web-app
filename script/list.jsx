@@ -1,10 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Router = require('react-router-component');
 
 var Moment = require('moment');
 var Request = require('superagent');
 
 var Common = require('./common.jsx');
+
+var Link = Router.Link;
 
 var Entry = React.createClass({
     render: function () {
@@ -47,13 +50,15 @@ var PageNav = React.createClass({
             if (this.props.now == 1) {
                 prev = <a href='./' className="paginate newer">Newer</a>;
             } else {
-                prev = <a href={this.props.now - 1} className="paginate newer">Newer</a>;
+                //prev = <a href={this.props.now - 1} className="paginate newer">Newer</a>;
+                prev = <Link href={`${Number(this.props.now) - 1}`} className="paginate newer">Newer</Link>;
             }
         } else {
             prev = <span className="paginate previous">Newer</span>;
         }
         if (this.props.total > this.props.now) {
-            next = <a href={Number(this.props.now) + 1} className="paginate older">Older</a>;
+            //next = <a href={Number(this.props.now) + 1} className="paginate older">Older</a>;
+            next = <Link href={`${Number(this.props.now) + 1}`} className="paginate older">Older</Link>;
         } else {
             next = <span className="paginate next">Older</span>;
         }
@@ -94,15 +99,14 @@ var ListBox = React.createClass({
         }
     },
     componentDidMount: function() {
-        Request.get(Common.txtree.server + 'list')
+        Request.get(Common.txtree.entryPoint + 'list')
             //.withCredentials()
-            .query({ p: this.props.page, s: 2, order: 'newest' })
+            .query({ p: this.props.page, s: Common.txtree.pageSize, order: 'newest' })
             //.set('x-access-host', 'txtree')
             //.set('Access-Control-Allow-Origin', '*')
             //.set('Access-Control-Allow-Credentials', 'true')
             .set('Accept', 'application/json')
             .end(function(error, result){
-
                 if (error) {
                     this.setState({
                         page: {
@@ -114,7 +118,7 @@ var ListBox = React.createClass({
                 } else {
                     var data = result.body.data;
 
-                    if (this.isMounted()) {
+                    if (this.isMounted() && data.count !== 0) {
                         this.setState({
                             page: {
                                 now: data.now,
@@ -141,4 +145,5 @@ var ListBox = React.createClass({
     }
 });
 
-ReactDOM.render(<ListBox page='1' />, document.getElementById('txtree_list'));
+module.exports = ListBox;
+//ReactDOM.render(<ListBox page='1' />, document.getElementById('txtree_list'));

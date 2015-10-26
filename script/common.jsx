@@ -1,7 +1,8 @@
 var txtreeData = {
     title: 'Txtree',
     version: '1.0',
-    server: 'http://localhost:3030/api/tree/'
+    entryPoint: 'http://localhost:3030/api/tree/',
+    pageSize: 3
 };
 
 var menuData = {
@@ -85,7 +86,6 @@ var listData = {
         }
     ]
 };
-
 
 module.exports = {
     txtree: txtreeData,
