@@ -28,12 +28,15 @@ use code reference from
     
 ## todo
 
-- [ ] bind txtree server
-- [ ] load list from cloud
+- [x] bind txtree server
+- [x] load list from cloud
+- [ ] bind router
 - [ ] patch list from cloud by pagination
 - [ ] load today list from cloud
 - [ ] share to cloud
 - [ ] favorite in cloud from local storage
 - [ ] document (type and color) theme
 - [ ] document (markdown, normal text) type
+- [ ] markdown editor
+- [ ] markdown view
 - [ ] search in cloud
