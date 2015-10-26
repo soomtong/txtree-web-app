@@ -1,7 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var Router = require('react-router-component');
+
 var Common = require('./common.jsx');
+
+var Locations = Router.Locations;
+var Location = Router.Location;
+var NotFound = Router.NotFound;
+var Link = Router.Link;
 
 var Title = React.createClass({
     render: function () {
@@ -25,10 +32,14 @@ var Lead = React.createClass({
 
 var Nav = React.createClass({
     render: function () {
+        var now = this.props.menu ? this.props.menu + '/' : '';
+
         var linkNodes = this.props.data.map(function (menu) {
+            var active = ('/' + now == (menu.link));
+
             return (
                 <li className="nav-item" key={menu.title}>
-                    <a className={Common.menu.menuLink(menu.active)} href={menu.link}>{menu.title}</a>
+                    <Link className={Common.menu.menuLink(active)} href={`${menu.link}`}>{menu.title}</Link>
                 </li>
             );
         });
@@ -46,7 +57,7 @@ var ListOrder = React.createClass({
             if (menu.link) {
                 return (
                     <li key={menu.title}>
-                        <a href={menu.link}>{menu.title}</a>
+                        <Link href={`${menu.link}`}>{menu.title}</Link>
                     </li>
                 );
             } else {
@@ -86,12 +97,12 @@ var MenuBox = React.createClass({
                 <Title />
                 <Lead />
                 <hr className="masthead-hr" />
-                <Nav data={Common.menu.menu1} />
+                <Nav data={Common.menu.menu1} menu={this.props.menu} />
                 <hr className="masthead-hr" />
-                <Nav data={Common.menu.menu2} />
-                <ListOrder data={Common.menu.menu4}/>
+                <Nav data={Common.menu.menu2} menu={this.props.menu} />
+                <ListOrder data={Common.menu.menu4} menu={this.props.menu} />
                 <hr className="masthead-hr" />
-                <Nav data={Common.menu.menu3} />
+                <Nav data={Common.menu.menu3} menu={this.props.menu} />
                 <hr className="masthead-hr" />
                 <AdBox />
                 <hr className="masthead-hr visible-xs" />
@@ -101,4 +112,18 @@ var MenuBox = React.createClass({
 });
 
 //module.exports = MenuBox;
-ReactDOM.render(<MenuBox />, document.getElementById('txtree_menu'));
+//ReactDOM.render(<MenuBox />, document.getElementById('txtree_menu'));
+
+
+var Menu = React.createClass({
+    render: function() {
+        return (
+            <Locations>
+                <Location path="/:menu" handler={MenuBox}/>
+                <NotFound handler={MenuBox} />
+            </Locations>
+        );
+    }
+});
+
+ReactDOM.render(<Menu />, document.getElementById('txtree_menu'));

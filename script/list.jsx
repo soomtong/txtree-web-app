@@ -60,7 +60,8 @@ var PageNav = React.createClass({
         } else {
             prev = <span className="paginate previous">Newer</span>;
         }
-        if (this.props.total > now) {
+
+        if (this.props.total > Number(now) + 1) {
             next = <Link href={'/page/' + `${Number(now) + 1}`} className="paginate older">Older</Link>;
         } else {
             next = <span className="paginate next">Older</span>;
@@ -92,6 +93,16 @@ var EntryList = React.createClass({
 });
 
 var ListBox = React.createClass({
+    loadFromServer: function () {
+        Request.get(Common.txtree.entryPoint + 'list')
+            //.withCredentials()
+            .query({ p: this.props.page, s: Common.list.pageSize, order: 'newest' })
+            //.set('x-access-host', 'txtree')
+            //.set('Access-Control-Allow-Origin', '*')
+            //.set('Access-Control-Allow-Credentials', 'true')
+            .set('Accept', 'application/json')
+            .end(Common.updateList.bind(this));
+    },
     getInitialState: function () {
         return {
             list: [],
@@ -103,15 +114,7 @@ var ListBox = React.createClass({
     },
     componentDidMount: function() {
         console.log('mount :', this.props.page);
-
-        Request.get(Common.txtree.entryPoint + 'list')
-            //.withCredentials()
-            .query({ p: this.props.page, s: Common.txtree.pageSize, order: 'newest' })
-            //.set('x-access-host', 'txtree')
-            //.set('Access-Control-Allow-Origin', '*')
-            //.set('Access-Control-Allow-Credentials', 'true')
-            .set('Accept', 'application/json')
-            .end(Common.updateList.bind(this));
+        this.loadFromServer();
     },
     render: function() {
         console.log('render : ', this.props.page);
@@ -122,6 +125,7 @@ var ListBox = React.createClass({
     }
 });
 
+/*
 var ListBoxWithPage = React.createClass({
     getInitialState: function () {
         return {
@@ -137,7 +141,7 @@ var ListBoxWithPage = React.createClass({
 
         Request.get(Common.txtree.entryPoint + 'list')
             //.withCredentials()
-            .query({ p: this.props.page, s: Common.txtree.pageSize, order: 'newest' })
+            .query({ p: this.props.page, s: Common.list.pageSize, order: 'newest' })
             //.set('x-access-host', 'txtree')
             //.set('Access-Control-Allow-Origin', '*')
             //.set('Access-Control-Allow-Credentials', 'true')
@@ -152,6 +156,7 @@ var ListBoxWithPage = React.createClass({
         );
     }
 });
+*/
 
 var List = React.createClass({
     render: function() {
@@ -159,6 +164,7 @@ var List = React.createClass({
             <Locations>
                 <Location path="/" handler={ListBox}/>
                 <Location path="/page/:page" handler={ListBox}/>
+                <NotFound handler={ListBox} />
             </Locations>
         );
     }
