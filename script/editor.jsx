@@ -6,25 +6,54 @@ var Common = require('./common.jsx');
 var Editor = React.createClass({
     getInitialState: function() {
         return {
-            code: "# Markdown"
+            text: "# Markdown",
+            hasKeep: false,
+            useMarkdown: true
         };
     },
-    updateCode: function(newCode) {
+    componentDidMount: function() {
+
+    },
+    onChangeHasKeep() {
         this.setState({
-            code: newCode
+            hasKeep: !this.state.hasEnd
         });
+    },
+    onChangeUseMarkdown() {
+        this.setState({
+            useMarkdown: !this.state.useMarkdown
+        });
+    },
+    handleSubmit: function(e) {
+        e.preventDefault();
+        var title = this.refs.title.value.trim();
+        var text = this.refs.content.value.trim();
+        var keep = this.refs.keep.value.trim();
+        var markdown = this.refs.markdown.value.trim();
+        if (!text) {
+            return;
+        }
+        // TODO: send request to the server
+
+        return;
+    },
+    updateText: function() {
+        console.log(this.refs.content.value.trim());
     },
     render: function () {
         return (
             <div className="page">
-                <form className="form-horizontal">
+                <form className="form-horizontal" onSubmit={this.handleSubmit}>
                     <div className="form-group">
-                        <input name="title" type="text" className="form-control" placeholder="Title input if Exist" />
+                        <input ref="title" type="text" className="form-control" placeholder="Title input if Exist" />
                     </div>
                     <div className="form-group">
-                        <textarea name="content" className="form-control" rows="15"></textarea>
+                        <textarea ref="content" className="form-control" rows="15" onChange={this.updateText} ></textarea>
                         <div className="checkbox">
-                            <label><input name="set" type="checkbox" value="" /> Set due to</label>
+                            <label><input ref="keep" type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
+                        </div>
+                        <div className="checkbox">
+                            <label><input ref="markdown" type="checkbox" checked={this.state.useMarkdown} onChange={this.onChangeUseMarkdown}/> Use markdown</label>
                         </div>
                     </div>
                     <hr/>
