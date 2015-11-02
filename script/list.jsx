@@ -8,9 +8,6 @@ var Request = require('superagent');
 
 var Common = require('./common.jsx');
 
-var Locations = Router.Locations;
-var Location = Router.Location;
-var NotFound = Router.NotFound;
 var Link = Router.Link;
 
 var Entry = React.createClass({
@@ -155,16 +152,4 @@ var ListBox = React.createClass({
     }
 });
 
-var List = React.createClass({
-    render: function() {
-        return (
-            <Locations>
-                <Location path="/" handler={ListBox}/>
-                <Location path="/page/:page" handler={ListBox}/>
-                <NotFound handler={ListBox} />
-            </Locations>
-        );
-    }
-});
-
-ReactDOM.render(<List />, document.getElementById('txtree_list'));
+module.exports = ListBox;

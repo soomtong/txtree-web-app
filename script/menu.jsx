@@ -5,9 +5,6 @@ var Router = require('react-router-component');
 
 var Common = require('./common.jsx');
 
-var Locations = Router.Locations;
-var Location = Router.Location;
-var NotFound = Router.NotFound;
 var Link = Router.Link;
 
 var Title = React.createClass({
@@ -111,19 +108,6 @@ var MenuBox = React.createClass({
     }
 });
 
-//module.exports = MenuBox;
+module.exports = MenuBox;
 //ReactDOM.render(<MenuBox />, document.getElementById('txtree_menu'));
 
-
-var Menu = React.createClass({
-    render: function() {
-        return (
-            <Locations>
-                <Location path="/:menu" handler={MenuBox}/>
-                <NotFound handler={MenuBox} />
-            </Locations>
-        );
-    }
-});
-
-ReactDOM.render(<Menu />, document.getElementById('txtree_menu'));

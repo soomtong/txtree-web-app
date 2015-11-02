@@ -36,8 +36,9 @@ use simple web server to access directly for root. something like 'http-serve' o
 
 - [x] bind txtree server
 - [x] load list from cloud
-- [ ] bind router
-- [ ] patch list from cloud by pagination
+- [x] bind router
+- [x] patch list from cloud by pagination
+- [ ] create document
 - [ ] load today list from cloud
 - [ ] share to cloud
 - [ ] favorite in cloud from local storage
@@ -45,4 +46,5 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [ ] document (markdown, normal text) type
 - [ ] markdown editor
 - [ ] markdown view
+- [ ] set document live duration
 - [ ] search in cloud
