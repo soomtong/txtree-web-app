@@ -1,12 +1,14 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactMarkdown = require('react-markdown');
+var Codemirror = require('react-codemirror');
 
 var Common = require('./common.jsx');
 
 var Editor = React.createClass({
     getInitialState: function() {
         return {
+            code: "// Code",
             text: "# Markdown",
             hasKeep: false,
             useMarkdown: true
@@ -52,7 +54,16 @@ var Editor = React.createClass({
         });
         console.log(this.refs.content.value.trim());
     },
+    updateCode: function(newCode) {
+        this.setState({
+            code: newCode
+        });
+    },
     render: function () {
+        var options = {
+            lineNumbers: true
+        };
+
         return (
             <div className="page">
                 <form className="form-horizontal" onSubmit={this.handleSubmit}>
@@ -60,6 +71,8 @@ var Editor = React.createClass({
                         <input ref="title" type="text" className="form-control" placeholder="Title input if Exist" />
                     </div>
                     <div className="form-group position-holder">
+                        <Codemirror className="custom-editor" value={this.state.code} onChange={this.updateCode} options={options} />
+
                         <textarea ref="content" className="form-control" rows="15" onChange={this.updateText} ></textarea>
                         <div className="checkbox">
                             <label><input ref="keep" type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
