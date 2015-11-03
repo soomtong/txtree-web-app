@@ -3,12 +3,14 @@ var ReactDOM = require('react-dom');
 var ReactMarkdown = require('react-markdown');
 var Codemirror = require('react-codemirror');
 
+require('codemirror/mode/markdown/markdown');
+
 var Common = require('./common.jsx');
 
 var Editor = React.createClass({
     getInitialState: function() {
         return {
-            code: "// Code",
+            mode: 0,
             text: "# Markdown",
             hasKeep: false,
             useMarkdown: true
@@ -30,7 +32,7 @@ var Editor = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
 
-        var text = this.refs.content.value.trim();
+        var text = this.state.text.value.trim();
 
         if (!text) {
             return;
@@ -44,25 +46,27 @@ var Editor = React.createClass({
             markdown: this.refs.markdown.value.trim() || ''
         };
 
-        //console.log(content);
+        console.log(content);
 
         return;
     },
-    updateText: function() {
+    updateText: function(newText) {
         this.setState({
-            text: this.refs.content.value.trim()
-        });
-        console.log(this.refs.content.value.trim());
-    },
-    updateCode: function(newCode) {
-        this.setState({
-            code: newCode
+            text: newText
         });
     },
     render: function () {
         var options = {
-            lineNumbers: true
+            lineNumbers: true,
+            mode: 'markdown'
         };
+
+        var icon = {
+            edit: <span className="preview glyphicon glyphicon-check"></span>,
+            view: <span className="edit glyphicon glyphicon-edit"></span>
+        };
+
+        var toggle = this.state.mode ? icon.view : icon.edit;
 
         return (
             <div className="page">
@@ -71,9 +75,8 @@ var Editor = React.createClass({
                         <input ref="title" type="text" className="form-control" placeholder="Title input if Exist" />
                     </div>
                     <div className="form-group position-holder">
-                        <Codemirror className="custom-editor" value={this.state.code} onChange={this.updateCode} options={options} />
+                        <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={options} />
 
-                        <textarea ref="content" className="form-control" rows="15" onChange={this.updateText} ></textarea>
                         <div className="checkbox">
                             <label><input ref="keep" type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
                         </div>
@@ -81,12 +84,7 @@ var Editor = React.createClass({
                             <label><input ref="markdown" type="checkbox" checked={this.state.useMarkdown} onChange={this.onChangeUseMarkdown}/> Use markdown</label>
                         </div>
                         <div className="control">
-                            <div className="preview">
-                                <span className="glyphicon glyphicon-check"></span>
-                            </div>
-                            <div className="edit">
-                                <span className="glyphicon glyphicon-edit"></span>
-                            </div>
+                            {toggle}
                         </div>
                     </div>
                     <hr/>
