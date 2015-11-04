@@ -10,7 +10,7 @@ var Common = require('./common.jsx');
 var Editor = React.createClass({
     getInitialState: function() {
         return {
-            mode: 0,
+            mode: false,
             text: "# Markdown",
             hasKeep: false,
             useMarkdown: true
@@ -32,7 +32,7 @@ var Editor = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
 
-        var text = this.state.text.value.trim();
+        var text = this.state.text.trim();
 
         if (!text) {
             return;
@@ -42,13 +42,20 @@ var Editor = React.createClass({
         var content = {
             title: this.refs.title.value.trim() || '',
             text: text,
-            keep: this.refs.keep.value.trim() || '',
-            markdown: this.refs.markdown.value.trim() || ''
+            keep: this.state.hasKeep,
+            markdown: this.state.useMarkdown,
         };
 
         console.log(content);
 
         return;
+    },
+    handlePreviewToggle: function (e) {
+        if (e.altKey && e.ctrlKey && e.keyCode === 13) {
+            e.preventDefault();
+
+            this.setState({ mode: !this.state.mode});
+        }
     },
     updateText: function(newText) {
         this.setState({
@@ -66,22 +73,30 @@ var Editor = React.createClass({
             view: <span className="edit glyphicon glyphicon-edit"></span>
         };
 
+        var panel = {
+            edit: <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={options} />,
+            view: <ReactMarkdown source={this.state.text} />
+        };
+
         var toggle = this.state.mode ? icon.view : icon.edit;
+        var preview = this.state.mode ? panel.view : panel.edit;
 
         return (
-            <div className="page">
+            <div className="page" onKeyUp={this.handlePreviewToggle}>
+                <div className="form-group">
+                    <input ref="title" type="text" className="form-control" placeholder="Title input if Exist" />
+                </div>
+
                 <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <input ref="title" type="text" className="form-control" placeholder="Title input if Exist" />
-                    </div>
                     <div className="form-group position-holder">
-                        <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={options} />
+
+                        {preview}
 
                         <div className="checkbox">
-                            <label><input ref="keep" type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
+                            <label><input type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
                         </div>
                         <div className="checkbox">
-                            <label><input ref="markdown" type="checkbox" checked={this.state.useMarkdown} onChange={this.onChangeUseMarkdown}/> Use markdown</label>
+                            <label><input type="checkbox" checked={this.state.useMarkdown} onChange={this.onChangeUseMarkdown}/> Use markdown</label>
                         </div>
                         <div className="control">
                             {toggle}
@@ -89,8 +104,6 @@ var Editor = React.createClass({
                     </div>
                     <hr/>
                     <button type="submit" className="btn">Submit</button>
-                    <hr/>
-                    <ReactMarkdown source={this.state.text} />
                 </form>
             </div>
         );

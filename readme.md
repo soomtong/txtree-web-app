@@ -44,8 +44,9 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] load list from cloud
 - [x] bind router
 - [x] patch list from cloud by pagination
-- [ ] codemirror editor
+- [x] codemirror editor
 - [ ] markdown viewer with toggling
+- [ ] hot key bind
 - [ ] create document
 - [ ] load today list from cloud
 - [ ] share to cloud
