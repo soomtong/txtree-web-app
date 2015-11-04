@@ -80,8 +80,8 @@ var listData = {
     data: [
         {
             _id: "1",
-            text: "Check api server status",
-            title: "No Server Connected",
+            text: "Check api server status or No data exist there",
+            title: "No Data Exist",
             created_at: Date.now()
         }
     ]

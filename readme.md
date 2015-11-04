@@ -6,7 +6,7 @@ inspirited by [Bootstrap Expo](http://expo.getbootstrap.com/)
 
 ## development
 
-prepare browserify, babelify with npm
+prepare browserify, babelify with npm, and provide simple web server for root routing
 
 ### build script
 
@@ -19,6 +19,12 @@ or
 ### build stylesheet
 
 > gulp stylesheet
+
+### test in browser
+
+> coffee server.coffee
+
+and open browser then connect app. refresh browser works everywhere
 
 ### assist in webstorm
 
