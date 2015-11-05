@@ -20,9 +20,13 @@ or
 
 > gulp stylesheet
 
-### test in browser
+### test in local browser
 
 > coffee server.coffee
+
+or 
+
+> nodemon server.coffee
 
 and open browser then connect app. refresh browser works everywhere
 

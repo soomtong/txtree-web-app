@@ -12,8 +12,7 @@ var Editor = React.createClass({
         return {
             mode: false,
             text: "# Markdown",
-            hasKeep: false,
-            useMarkdown: true
+            hasKeep: false
         };
     },
     componentDidMount: function() {
@@ -22,11 +21,6 @@ var Editor = React.createClass({
     onChangeHasKeep() {
         this.setState({
             hasKeep: !this.state.hasKeep
-        });
-    },
-    onChangeUseMarkdown() {
-        this.setState({
-            useMarkdown: !this.state.useMarkdown
         });
     },
     handleSubmit: function(e) {
@@ -75,7 +69,7 @@ var Editor = React.createClass({
 
         var panel = {
             edit: <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={options} />,
-            view: <ReactMarkdown source={this.state.text} />
+            view: <ReactMarkdown className="custom-viewer" source={this.state.text} />
         };
 
         var toggle = this.state.mode ? icon.view : icon.edit;
@@ -94,9 +88,6 @@ var Editor = React.createClass({
 
                         <div className="checkbox">
                             <label><input type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
-                        </div>
-                        <div className="checkbox">
-                            <label><input type="checkbox" checked={this.state.useMarkdown} onChange={this.onChangeUseMarkdown}/> Use markdown</label>
                         </div>
                         <div className="control">
                             {toggle}
