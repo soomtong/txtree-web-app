@@ -49,13 +49,15 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] bind router
 - [x] patch list from cloud by pagination
 - [x] codemirror editor
-- [ ] markdown viewer with toggling
-- [ ] hot key bind
-- [ ] create document
+- [x] markdown viewer with toggling
+- [ ] create document and share to cloud
+- [ ] set document live duration
 - [ ] load today list from cloud
-- [ ] share to cloud
+- [ ] curate list from cloud
+- [ ] list order by types from cloud
 - [ ] favorite in cloud from local storage
 - [ ] document (type and color) theme
-- [ ] document (markdown, normal text) type
-- [ ] set document live duration
+- [ ] auto resize editor height
+- [ ] hot key bind
+- [ ] bookmarklet
 - [ ] search in cloud

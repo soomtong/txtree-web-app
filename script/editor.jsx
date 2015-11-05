@@ -48,8 +48,11 @@ var Editor = React.createClass({
         if (e.altKey && e.ctrlKey && e.keyCode === 13) {
             e.preventDefault();
 
-            this.setState({ mode: !this.state.mode});
+            this.toggleState();
         }
+    },
+    toggleState: function () {
+        this.setState({ mode: !this.state.mode});
     },
     updateText: function(newText) {
         this.setState({
@@ -57,23 +60,23 @@ var Editor = React.createClass({
         });
     },
     render: function () {
-        var options = {
+        var editorOptions = {
             lineNumbers: true,
             mode: 'markdown'
         };
 
         var icon = {
-            edit: <span className="preview glyphicon glyphicon-check"></span>,
-            view: <span className="edit glyphicon glyphicon-edit"></span>
+            edit: <span onClick={this.toggleState} className="preview glyphicon glyphicon-check"></span>,
+            view: <span onClick={this.toggleState} className="edit glyphicon glyphicon-edit"></span>
         };
 
         var panel = {
-            edit: <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={options} />,
+            edit: <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={editorOptions} />,
             view: <ReactMarkdown className="custom-viewer" source={this.state.text} />
         };
 
-        var toggle = this.state.mode ? icon.view : icon.edit;
-        var preview = this.state.mode ? panel.view : panel.edit;
+        var selectedIcon = this.state.mode ? icon.view : icon.edit;
+        var selectedPanel = this.state.mode ? panel.view : panel.edit;
 
         return (
             <div className="page" onKeyUp={this.handlePreviewToggle}>
@@ -84,13 +87,13 @@ var Editor = React.createClass({
                 <form className="form-horizontal" onSubmit={this.handleSubmit}>
                     <div className="form-group position-holder">
 
-                        {preview}
+                        {selectedPanel}
 
                         <div className="checkbox">
                             <label><input type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
                         </div>
                         <div className="control">
-                            {toggle}
+                            {selectedIcon}
                         </div>
                     </div>
                     <hr/>
