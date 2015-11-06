@@ -14,6 +14,7 @@ var MenuBox = require('./menu.jsx');
 
 var ListBox = require('./list.jsx');
 var EditorBox = require('./editor.jsx');
+var ViewBox = require('./view.jsx');
 
 var Menu = React.createClass({
     render: function() {
@@ -33,6 +34,7 @@ var Main = React.createClass({
                 <Location path="/" handler={ListBox}/>
                 <Location path="/create" handler={EditorBox}/>
                 <Location path="/page/:page" handler={ListBox}/>
+                <Location path="/view/:id" handler={ViewBox}/>
                 <NotFound handler={ListBox} />
             </Locations>
         );

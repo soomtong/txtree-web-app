@@ -49,8 +49,9 @@ var Editor = React.createClass({
         Request.post(Common.txtree.entryPoint + 'doc')
             .send(content)
             .set('Accept', 'application/json')
+            .set('x-access-host', 'txtree')
             .end(function (err, res) {
-                if (res.ok) {
+                if (res && res.ok) {
                     console.log('yay got ' + JSON.stringify(res.body));
 
                     // move to that document view pag

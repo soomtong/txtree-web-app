@@ -51,6 +51,8 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] codemirror editor
 - [x] markdown viewer with toggling
 - [x] create document and share to cloud
+- [ ] view each document
+- [ ] replace mongo id by short url 
 - [ ] set document live duration
 - [ ] load today list from cloud
 - [ ] curate list from cloud

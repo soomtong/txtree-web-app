@@ -15,7 +15,11 @@ var Entry = React.createClass({
         var title, text, createdAt, time;
 
         if (this.props.data.title) {
-            title = <h2 className="entry-title"><a href="/">{this.props.data.title}</a></h2>;
+            title = <h2 className="entry-title">
+                <Link href={'/view/' + this.props.data._id}>
+                    {this.props.data.title}
+                </Link>
+            </h2>;
         } else {
             title = <h2 className="entry-title"></h2>
         }
@@ -31,9 +35,10 @@ var Entry = React.createClass({
 
         return (
             <div className="entry">
-                <a className="entry-thumb" href={this.props.data._id}>
+                <Link href={'/view/' + this.props.data._id} className="entry-thumb">
                     {text}
-                </a>
+                </Link>
+
                 <div className="entry-content">
                     {title}
                     {createdAt}
