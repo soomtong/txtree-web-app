@@ -1,8 +1,12 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+
+var Request = require('superagent');
+
 var ReactMarkdown = require('react-markdown');
 var Codemirror = require('react-codemirror');
 
+require('codemirror/mode/xml/xml');
 require('codemirror/mode/markdown/markdown');
 
 var Common = require('./common.jsx');
@@ -12,7 +16,8 @@ var Editor = React.createClass({
         return {
             mode: false,
             text: "# Markdown",
-            hasKeep: false
+            hasKeep: false,
+            editorClassName : "custom-editor"
         };
     },
     componentDidMount: function() {
@@ -36,13 +41,12 @@ var Editor = React.createClass({
         var content = {
             title: this.refs.title.value.trim() || '',
             text: text,
-            keep: this.state.hasKeep,
-            markdown: this.state.useMarkdown,
+            keep: this.state.hasKeep
         };
 
         console.log(content);
 
-        return;
+        return false;
     },
     handlePreviewToggle: function (e) {
         if (e.altKey && e.ctrlKey && e.keyCode === 13) {
@@ -59,9 +63,21 @@ var Editor = React.createClass({
             text: newText
         });
     },
+    updateFocusDisplay: function () {
+        if (this.state.editorClassName == 'custom-editor') {
+            this.setState({
+                editorClassName: "custom-editor custom-editor-focused"
+            });
+        } else {
+            this.setState({
+                editorClassName: "custom-editor"
+            });
+        }
+    },
     render: function () {
         var editorOptions = {
             lineNumbers: true,
+            viewportMargin: Infinity,
             mode: 'markdown'
         };
 
@@ -71,7 +87,7 @@ var Editor = React.createClass({
         };
 
         var panel = {
-            edit: <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={editorOptions} />,
+            edit: <Codemirror className={this.state.editorClassName} value={this.state.text} onChange={this.updateText} onFocusChange={this.updateFocusDisplay} options={editorOptions} />,
             view: <ReactMarkdown className="custom-viewer" source={this.state.text} />
         };
 
@@ -97,7 +113,7 @@ var Editor = React.createClass({
                         </div>
                     </div>
                     <hr/>
-                    <button type="submit" className="btn">Submit</button>
+                    <button type="submit" className="btn btn-default">Submit</button>
                 </form>
             </div>
         );
