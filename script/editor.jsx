@@ -15,9 +15,8 @@ var Editor = React.createClass({
     getInitialState: function() {
         return {
             mode: false,
-            text: "# Markdown",
-            hasKeep: false,
-            editorClassName : "custom-editor"
+            text: "## Txtree document based on Markdown",
+            hasKeep: false
         };
     },
     componentDidMount: function() {
@@ -63,17 +62,6 @@ var Editor = React.createClass({
             text: newText
         });
     },
-    updateFocusDisplay: function () {
-        if (this.state.editorClassName == 'custom-editor') {
-            this.setState({
-                editorClassName: "custom-editor custom-editor-focused"
-            });
-        } else {
-            this.setState({
-                editorClassName: "custom-editor"
-            });
-        }
-    },
     render: function () {
         var editorOptions = {
             lineNumbers: true,
@@ -87,7 +75,7 @@ var Editor = React.createClass({
         };
 
         var panel = {
-            edit: <Codemirror className={this.state.editorClassName} value={this.state.text} onChange={this.updateText} onFocusChange={this.updateFocusDisplay} options={editorOptions} />,
+            edit: <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={editorOptions} />,
             view: <ReactMarkdown className="custom-viewer" source={this.state.text} />
         };
 
