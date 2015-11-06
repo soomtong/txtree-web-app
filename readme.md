@@ -50,7 +50,7 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] patch list from cloud by pagination
 - [x] codemirror editor
 - [x] markdown viewer with toggling
-- [ ] create document and share to cloud
+- [x] create document and share to cloud
 - [ ] set document live duration
 - [ ] load today list from cloud
 - [ ] curate list from cloud

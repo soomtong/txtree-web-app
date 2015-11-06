@@ -1,6 +1,9 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var Router = require('react-router-component');
+var environment = Router.environment;
+
 var Request = require('superagent');
 
 var ReactMarkdown = require('react-markdown');
@@ -42,6 +45,21 @@ var Editor = React.createClass({
             text: text,
             keep: this.state.hasKeep
         };
+
+        Request.post(Common.txtree.entryPoint + 'doc')
+            .send(content)
+            .set('Accept', 'application/json')
+            .end(function (err, res) {
+                if (res.ok) {
+                    console.log('yay got ' + JSON.stringify(res.body));
+
+                    // move to that document view pag
+                    // http://stackoverflow.com/questions/25374945/redirection-with-react-router-component
+                    environment.defaultEnvironment.navigate("/");
+                } else {
+                    alert('Oh no! errors there ' + res.text);
+                }
+            });
 
         console.log(content);
 
