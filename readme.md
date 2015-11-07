@@ -51,7 +51,7 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] codemirror editor
 - [x] markdown viewer with toggling
 - [x] create document and share to cloud
-- [ ] view each document
+- [x] view each document
 - [ ] replace mongo id by short url 
 - [ ] set document live duration
 - [ ] load today list from cloud
@@ -60,6 +60,7 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [ ] favorite in cloud from local storage
 - [ ] document (type and color) theme
 - [ ] auto resize editor height
+- [ ] clean up css name
 - [ ] hot key bind
 - [ ] bookmarklet
 - [ ] search in cloud

@@ -123,7 +123,7 @@ var ListBox = React.createClass({
                     list: Common.list.data
                 });
             }
-        }               // Calling the end function will send the request
+        }
     },
     loadFromServer: function (page) {
         Request.get(Common.txtree.entryPoint + 'list')
