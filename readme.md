@@ -52,6 +52,7 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] markdown viewer with toggling
 - [x] create document and share to cloud
 - [x] view each document
+- [x] update list entry more
 - [ ] replace mongo id by short url 
 - [ ] set document live duration
 - [ ] load today list from cloud

@@ -74,7 +74,7 @@ var menuData = {
 };
 
 var listData = {
-    pageSize: 4,
+    pageSize: 12,
     totalPage: 1,
     thisPage: 1,
     data: [
