@@ -12,13 +12,13 @@ var Link = Router.Link;
 
 var Entry = React.createClass({
     render: function () {
+        var data = this.props.data || {};
         var title, createdAt, time;
-        var text = [];
 
-        if (this.props.data.title) {
+        if (data.title) {
             title = <h2 className="entry-title">
-                <Link href={'/view/' + this.props.data._id}>
-                    {this.props.data.title}
+                <Link href={'/view/' + data._id}>
+                    {data.title}
                 </Link>
             </h2>;
         } else {
@@ -28,22 +28,21 @@ var Entry = React.createClass({
         // need to check doc type or theme cuz, markdown parsing
         // and trim string by 3 line
 
-        text = this.props.data.text.split(/\r*\n/);
-
+        var text = data.text.split(/\r*\n/);
+        var text_index = 0;
         var textNodes = text.map(function (item) {
+            text_index++;
             return (
-                <p className="summery" key={item}>{item}</p>
+                <p className="summery" key={text_index}>{item}</p>
             );
         });
 
-        // use moment by require with browserify
-        // todo: dynamic update for past time
-        time = Moment(this.props.date).format('h:mm:ss a');
+        time = Moment(data.created_at).fromNow();
         createdAt = <p className="entry-date">{time}</p>;
 
         return (
             <div className="entry">
-                <Link href={'/view/' + this.props.data._id} className="entry-thumb">
+                <Link href={'/view/' + data._id} className="entry-thumb">
                     {textNodes}
                 </Link>
 

@@ -15,7 +15,8 @@ var Entry = React.createClass({
         var data = this.props.data;
 
         // todo: dynamic update for past time
-        var time = Moment(data.created_at).format('h:mm:ss a');
+
+        var time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
 
         return (
             <div className="view">
@@ -55,12 +56,6 @@ var ViewBox = React.createClass({
     componentDidMount: function() {
         this.loadFromServer(this.props.id);
     },
-/*
-    shouldComponentUpdate: function(nextProps, nextState) {
-        console.log(nextProps, nextState);
-        return nextState.data && nextProps.id !== nextState.data._id;
-    },
-*/
     render: function() {
         return (
             <div className="viewing">
