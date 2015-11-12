@@ -49,11 +49,13 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] bind router
 - [x] patch list from cloud by pagination
 - [x] codemirror editor
-- [x] markdown viewer with toggling
+- [x] markdown viewer with toggling in global at create menu
 - [x] create document and share to cloud
 - [x] view each document
 - [x] update list entry more
-- [ ] replace mongo id by short url 
+- [ ] save last data to local storage at every action in create menu
+- [ ] load last data from local storage at start of create document
+- [ ] replace mongo id by short url
 - [ ] set document live duration
 - [ ] load today list from cloud
 - [ ] curate list from cloud

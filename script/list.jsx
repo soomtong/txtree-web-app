@@ -13,7 +13,6 @@ var Link = Router.Link;
 var Entry = React.createClass({
     render: function () {
         var title, createdAt, time;
-        var text = [];
 
         if (this.props.data.title) {
             title = <h2 className="entry-title">
@@ -28,7 +27,7 @@ var Entry = React.createClass({
         // need to check doc type or theme cuz, markdown parsing
         // and trim string by 3 line
 
-        text = this.props.data.text.split(/\r*\n/);
+        var text = this.props.data.text.split(/\r*\n/);
 
         var textNodes = text.map(function (item) {
             return (
