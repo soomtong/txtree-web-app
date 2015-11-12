@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 
 var Router = require('react-router-component');
 
@@ -109,5 +108,3 @@ var MenuBox = React.createClass({
 });
 
 module.exports = MenuBox;
-//ReactDOM.render(<MenuBox />, document.getElementById('txtree_menu'));
-

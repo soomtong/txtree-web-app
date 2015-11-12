@@ -1,5 +1,4 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
 
 var Router = require('react-router-component');
 
@@ -12,22 +11,18 @@ var Link = Router.Link;
 
 var Entry = React.createClass({
     render: function () {
+        var data = this.props.data || {};
         var title, createdAt, time;
 
-        if (this.props.data.title) {
+        if (data.title) {
             title = <h2 className="entry-title">
-                <Link href={'/view/' + this.props.data._id}>
-                    {this.props.data.title}
+                <Link href={'/view/' + data._id}>
+                    {data.title}
                 </Link>
             </h2>;
         } else {
             title = <h2 className="entry-title"></h2>
         }
-
-        // need to check doc type or theme cuz, markdown parsing
-        // and trim string by 3 line
-
-        var text = this.props.data.text.split(/\r*\n/);
 
         var text = data.text.split(/\r*\n/);
         var text_index = 0;
