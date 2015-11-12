@@ -5,6 +5,7 @@ var Router = require('react-router-component');
 var environment = Router.environment;
 
 var Request = require('superagent');
+var Keymage = require('keymage');
 
 var ReactMarkdown = require('react-markdown');
 var Codemirror = require('react-codemirror');
@@ -13,6 +14,8 @@ require('codemirror/mode/xml/xml');
 require('codemirror/mode/markdown/markdown');
 
 var Common = require('./common.jsx');
+
+var isMac = navigator.userAgent.indexOf("Mac OS X") != -1;
 
 var Editor = React.createClass({
     getInitialState: function() {
@@ -23,7 +26,30 @@ var Editor = React.createClass({
         };
     },
     componentDidMount: function() {
+        var that = this;
 
+        if (isMac) {
+            Keymage('cmd-enter', function() {
+                that.toggleState();
+            });
+        } else {
+            Keymage('ctrl-enter', function() {
+                that.toggleState();
+            });
+        }
+    },
+    componentWillUnmount: function () {
+        var that = this;
+
+        if (isMac) {
+            Keymage.unbind('cmd-enter', function () {
+                that.toggleState();
+            });
+        } else {
+            Keymage.unbind('ctrl-enter', function () {
+                that.toggleState();
+            });
+        }
     },
     onChangeHasKeep() {
         this.setState({
@@ -62,8 +88,6 @@ var Editor = React.createClass({
                 }
             });
 
-        console.log(content);
-
         return false;
     },
     handlePreviewToggle: function (e) {
@@ -89,8 +113,8 @@ var Editor = React.createClass({
         };
 
         var icon = {
-            edit: <span onClick={this.toggleState} className="preview glyphicon glyphicon-check"></span>,
-            view: <span onClick={this.toggleState} className="edit glyphicon glyphicon-edit"></span>
+            edit: <span onClick={this.toggleState} className="preview glyphicon glyphicon-check" title={ (isMac? 'CMD':'Ctrl') + 'Enter'}></span>,
+            view: <span onClick={this.toggleState} className="edit glyphicon glyphicon-edit" title={ (isMac? 'CMD':'Ctrl') + 'Enter'}></span>
         };
 
         var panel = {
@@ -102,7 +126,7 @@ var Editor = React.createClass({
         var selectedPanel = this.state.mode ? panel.view : panel.edit;
 
         return (
-            <div className="page" onKeyUp={this.handlePreviewToggle}>
+            <div className="page">
                 <div className="form-group">
                     <input ref="title" type="text" className="form-control" placeholder="Title input if Exist" />
                 </div>
