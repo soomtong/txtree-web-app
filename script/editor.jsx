@@ -15,6 +15,7 @@ require('codemirror/mode/markdown/markdown');
 var Common = require('./common.jsx');
 
 var isMac = navigator.userAgent.indexOf("Mac OS X") != -1;
+var storage = window.localStorage;
 
 var Editor = React.createClass({
     getInitialState: function() {
@@ -36,6 +37,11 @@ var Editor = React.createClass({
                 that.toggleState();
             });
         }
+
+        // load data from local storage
+        this.setState({
+            text: storage.getItem('last-text')
+        });
     },
     componentWillUnmount: function () {
         var that = this;
@@ -49,6 +55,9 @@ var Editor = React.createClass({
                 that.toggleState();
             });
         }
+
+        // save data to local storage
+        storage.setItem('last-text', this.state.text);
     },
     onChangeHasKeep() {
         this.setState({

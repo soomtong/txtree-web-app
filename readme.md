@@ -40,7 +40,7 @@ use code reference from
 
 react router is not match for '/project-name-in-webstorm/index.html' to '/index.html' (root) for this index.html
 
-use simple web server to access directly for root. something like 'http-serve' or 'locally' 
+use simple web server to access directly for root, something like 'http-serve' or 'locally' 
     
 ## todo
 
@@ -53,9 +53,9 @@ use simple web server to access directly for root. something like 'http-serve' o
 - [x] create document and share to cloud
 - [x] view each document
 - [x] update list entry more
-- [ ] save last data to local storage at every action in create menu
-- [ ] load last data from local storage at start of create document
-- [ ] replace mongo id by short url
+- [x] save last data to local storage at every action in create menu
+- [x] load last data from local storage at start of create document
+- [ ] update txtree api document in haroo cloud core 
 - [ ] set document live duration
 - [ ] load today list from cloud
 - [ ] curate list from cloud

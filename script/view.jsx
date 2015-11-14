@@ -28,6 +28,14 @@ var Entry = React.createClass({
 });
 
 var ViewBox = React.createClass({
+    getInitialState: function () {
+        return {
+            data: {}
+        }
+    },
+    componentDidMount: function() {
+        this.loadFromServer(this.props.id);
+    },
     updateView: function (err, res) {
         if (res && res.ok) {
             var data = res.body.data;
@@ -46,14 +54,6 @@ var ViewBox = React.createClass({
             .query({ t: theme })
             .set('x-access-host', 'txtree')
             .end(this.updateView);
-    },
-    getInitialState: function () {
-        return {
-            data: {}
-        }
-    },
-    componentDidMount: function() {
-        this.loadFromServer(this.props.id);
     },
     render: function() {
         return (

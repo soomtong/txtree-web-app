@@ -10,7 +10,7 @@ var Title = React.createClass({
     render: function () {
         return (
             <h1 className="masthead-title">
-                <a href="/">{Common.txtree.title}</a>
+                <Link href={`${Common.menu.menu1[0].link}`}>{Common.txtree.title}</Link>
             </h1>
         );
     }
@@ -20,7 +20,7 @@ var Lead = React.createClass({
     render: function () {
         return (
             <p className="masthead-lead">
-                Some anonymous documents of <a href="http://txtree.net">{Common.txtree.title}</a> hosted by <a href="http://haroocloud.com">Haroo Cloud</a>
+                Some anonymous documents of <Link href={`${Common.menu.menu1[0].link}`}>{Common.txtree.title}</Link> hosted by <a href="http://haroocloud.com" target="_blank">Haroo Cloud</a>
             </p>
         );
     }
