@@ -19,10 +19,16 @@ var storage = window.localStorage;
 
 var Editor = React.createClass({
     getInitialState: function() {
+        var today = new Date();
         return {
             mode: false,
             text: "## Txtree document based on Markdown",
-            hasKeep: false
+            hasKeep: false,
+            keep: {
+                year: today.getFullYear(),
+                month: today.getMonth() + 1,
+                date: today.getDate()
+            }
         };
     },
     componentDidMount: function() {
@@ -40,7 +46,7 @@ var Editor = React.createClass({
 
         // load data from local storage
         this.setState({
-            text: storage.getItem('last-text')
+            text: storage.getItem('last-text') || this.state.text
         });
     },
     componentWillUnmount: function () {
@@ -77,7 +83,8 @@ var Editor = React.createClass({
         var content = {
             title: this.refs.title.value.trim() || '',
             text: text,
-            keep: this.state.hasKeep
+            hasKeep: this.state.hasKeep,
+            keep: this.state.keep
         };
 
         Request.post(Common.txtree.entryPoint + 'doc')
@@ -86,7 +93,7 @@ var Editor = React.createClass({
             .set('x-access-host', 'txtree')
             .end(function (err, res) {
                 if (res && res.ok) {
-                    console.log('yay got ' + JSON.stringify(res.body));
+                    //console.log('yay got ' + JSON.stringify(res.body));
 
                     // move to that document view pag
                     // http://stackoverflow.com/questions/25374945/redirection-with-react-router-component
@@ -113,6 +120,24 @@ var Editor = React.createClass({
             text: newText
         });
     },
+    updateYear: function (e) {
+        var keep = this.state.keep;
+        keep.year = Number(e.target.value);
+
+        this.setState({ keep: keep })
+    },
+    updateMonth: function (e) {
+        var keep = this.state.keep;
+        keep.month = Number(e.target.value);
+
+        this.setState({ keep: keep })
+    },
+    updateDate: function (e) {
+        var keep = this.state.keep;
+        keep.date = Number(e.target.value);
+
+        this.setState({ keep: keep })
+    },
     render: function () {
         var editorOptions = {
             lineNumbers: true,
@@ -125,13 +150,44 @@ var Editor = React.createClass({
             view: <span onClick={this.toggleState} className="edit glyphicon glyphicon-edit" title={ (isMac? 'CMD':'Ctrl') + 'Enter'}></span>
         };
 
+        var yearEntry = [2015, 2016, 2017].map(function (item) {
+            return (
+                <option key={item} value={item}>{item}</option>
+            );
+        });
+
+        var monthEntry = [1,2,3,4,5,6,7,8,9,10,11,12].map(function (item) {
+            return (
+                <option key={item} value={item}>{item}</option>
+            );
+        });
+
+        var year = this.state.keep.year;
+        var month = this.state.keep.month;
+
+        var leaf = (year % 4 == 0 && ( year % 100 != 0 || year % 400 == 0 ) ) ? 29 : 28;
+        var days = [1, 31, leaf, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+        var dateEntry = Common.range(1, days[month]).map(function (item) {
+            return (
+                <option key={item} value={item}>{item}</option>
+            );
+        });
+
         var panel = {
             edit: <Codemirror className="custom-editor" value={this.state.text} onChange={this.updateText} options={editorOptions} />,
-            view: <ReactMarkdown className="custom-viewer" source={this.state.text} />
+            view: <ReactMarkdown className="custom-viewer" source={this.state.text} />,
+            calendar: <div className="calendar">
+                <select className="due-to-year" name="year" value={this.state.keep.year} onChange={this.updateYear}>{yearEntry}</select>
+                <select className="due-to-month" name="month" value={this.state.keep.month} onChange={this.updateMonth}>{monthEntry}</select>
+                <select className="due-to-day" name="date"value={this.state.keep.date} onChange={this.updateDate}>{dateEntry}</select>
+            </div>
         };
 
         var selectedIcon = this.state.mode ? icon.view : icon.edit;
         var selectedPanel = this.state.mode ? panel.view : panel.edit;
+
+        var dueToSelector = this.state.hasKeep? panel.calendar : '';
 
         return (
             <div className="page">
@@ -146,6 +202,7 @@ var Editor = React.createClass({
 
                         <div className="checkbox">
                             <label><input type="checkbox" checked={this.state.hasKeep} onChange={this.onChangeHasKeep}/> Set due to</label>
+                            {dueToSelector}
                         </div>
                         <div className="control">
                             {selectedIcon}
