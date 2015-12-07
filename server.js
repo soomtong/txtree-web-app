@@ -1,27 +1,25 @@
-var app = {
+const app = {
     port: 3031,
     dev: 'http://localhost:3030',
     prod: 'http://haroocloud.com'
 };
 
-var express = require('express');
-var nunjucks = require('nunjucks');
+const express = require('express');
+const nunjucks = require('nunjucks');
 
-server = express();
+const server = express();
 
 nunjucks.configure('view', {
 	autoescape: true,
 	express: server
 });
 
-server.use(express.static('./'));
+server.use(express.static(__dirname));
 
 server.all('*', function (req, res) {
     var params = {};
 
     params.hostname = req.hostname == 'localhost' ? app.dev : app.prod;
-
-    console.log(params.hostname);
 
     res.render('index.html', params);
 });
