@@ -55,8 +55,7 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] update list entry more
 - [x] save last data to local storage at every action in create menu
 - [x] load last data from local storage at start of create document
-- [ ] update txtree api document in haroo cloud core 
-- [ ] set document live duration
+- [x] set document live duration
 - [ ] load today list from cloud
 - [ ] curate list from cloud
 - [ ] list order by types from cloud

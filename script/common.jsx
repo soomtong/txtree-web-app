@@ -1,7 +1,7 @@
 var txtreeData = {
     title: 'Txtree',
     version: '1.0',
-    entryPoint: 'http://localhost:3030/api/tree/'
+    entryPoint: $("meta[name=hostname]").attr('content') + '/api/tree/'
 };
 
 var menuData = {

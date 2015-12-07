@@ -32,6 +32,7 @@ var Editor = React.createClass({
         };
     },
     componentDidMount: function() {
+        console.log(Common.txtree.entryPoint);
         var that = this;
 
         if (isMac) {
