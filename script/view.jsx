@@ -11,17 +11,23 @@ var Common = require('./common.jsx');
 
 var Entry = React.createClass({
     render: function () {
-        var data = this.props.data;
+        var title, feedback, data = this.props.data, time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
 
-        // todo: dynamic update for past time
+        if (data.title) {
+            title = <h2 className="entry-title page-header">{data.title}</h2>;
+        }
 
-        var time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
+        feedback = <p className="entry-date">{time}
+            <span className="view"><span className="glyphicon glyphicon-eye-open"></span> {data.view_count || 0}</span>
+            <span className="commend"><span className="glyphicon glyphicon-thumbs-up"></span> {data.commend_count || 0}</span>
+            <span className="claim"><span className="glyphicon glyphicon-thumbs-down"></span> {data.claim_count || 0}</span>
+        </p>;
 
         return (
             <div className="view">
-                <h2 className="entry-title page-header">{data.title || ''}</h2>
-                <p className="entry-date">{time}</p>
-                <ReactMarkdown className="custom-viewer" source={data.text || ''} />
+                {title}
+                {feedback}
+                <ReactMarkdown className="custom-viewer markdown-body" source={data.text || ''} />
             </div>
         );
     }

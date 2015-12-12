@@ -27,5 +27,3 @@ server.all('*', function (req, res) {
 server.listen(app.port, function () {
     console.log(`run server ${app.port} open browser and start app`);
 });
-
-

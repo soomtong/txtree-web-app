@@ -22,11 +22,11 @@ or
 
 ### test in local browser
 
-> coffee server.coffee
+> node server.app
 
 or 
 
-> nodemon server.coffee
+> nodemon server.app
 
 and open browser then connect app. refresh browser works everywhere
 
