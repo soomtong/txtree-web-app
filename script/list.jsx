@@ -177,10 +177,12 @@ var ListBox = React.createClass({
         }
     },
     componentDidMount: function() {
+        //console.log('did mounted', this.props);
         this.loadFromServer(this.props.page, this.props.menu);
     },
     componentWillReceiveProps: function (nextProps) {
-        this.loadFromServer(nextProps.page, this.props.menu);
+        //console.log('receive props', nextProps);
+        this.loadFromServer(nextProps.page, nextProps.menu);
     },
     render: function() {
         return (
