@@ -3,12 +3,12 @@ var ReactDOM = require('react-dom');
 
 var Router = require('react-router-component');
 
-var Common = require('./common.jsx');
+//var Common = require('./common.jsx');
 
 var Locations = Router.Locations;
 var Location = Router.Location;
 var NotFound = Router.NotFound;
-var Link = Router.Link;
+//var Link = Router.Link;
 
 var MenuBox = require('./menu.jsx');
 
@@ -34,6 +34,8 @@ var Main = React.createClass({
                 <Location path="/" handler={ListBox}/>
                 <Location path="/create" handler={EditorBox}/>
                 <Location path="/page/:page" handler={ListBox}/>
+                <Location path="/:menu" handler={ListBox}/>
+                <Location path="/:menu/page/:page" handler={ListBox}/>
                 <Location path="/view/:id" handler={ViewBox}/>
                 <NotFound handler={ListBox} />
             </Locations>

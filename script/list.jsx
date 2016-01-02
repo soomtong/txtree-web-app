@@ -54,21 +54,41 @@ var Entry = React.createClass({
 var PageNav = React.createClass({
     render: function () {
         var next, prev, now = this.props.now || 0;
+        var menu = this.props.menu;
 
-        if (now > 0) {
-            if (now == 1) {
-                prev = <Link href='/' className="paginate newer">Newer</Link>;
+        // go simple, it's better for string manipulation or inject string
+        if (menu) {
+            if (now > 0) {
+                if (now == 1) {
+                    prev = <Link href={'/' + menu} className="paginate newer">Newer</Link>;
+                } else {
+                    prev = <Link href={'/' + menu + '/page/' + `${Number(now) - 1}`} className="paginate newer">Newer</Link>;
+                }
             } else {
-                prev = <Link href={'/page/' + `${Number(now) - 1}`} className="paginate newer">Newer</Link>;
+                prev = <span className="paginate previous">Newer</span>;
+            }
+
+            if (this.props.total > Number(now) + 1) {
+                next = <Link href={'/' + menu + '/page/' + `${Number(now) + 1}`} className="paginate older">Older</Link>;
+            } else {
+                next = <span className="paginate next">Older</span>;
             }
         } else {
-            prev = <span className="paginate previous">Newer</span>;
-        }
+            if (now > 0) {
+                if (now == 1) {
+                    prev = <Link href='/' className="paginate newer">Newer</Link>;
+                } else {
+                    prev = <Link href={'/page/' + `${Number(now) - 1}`} className="paginate newer">Newer</Link>;
+                }
+            } else {
+                prev = <span className="paginate previous">Newer</span>;
+            }
 
-        if (this.props.total > Number(now) + 1) {
-            next = <Link href={'/page/' + `${Number(now) + 1}`} className="paginate older">Older</Link>;
-        } else {
-            next = <span className="paginate next">Older</span>;
+            if (this.props.total > Number(now) + 1) {
+                next = <Link href={'/page/' + `${Number(now) + 1}`} className="paginate older">Older</Link>;
+            } else {
+                next = <span className="paginate next">Older</span>;
+            }
         }
 
         return (
@@ -90,13 +110,19 @@ var EntryList = React.createClass({
         return (
             <div className="listing">
                 {entryNodes}
-                <PageNav now={this.props.now} total={this.props.page.total}/>
+                <PageNav now={this.props.now} total={this.props.page.total} menu={this.props.menu}/>
             </div>
         );
     }
 });
 
 var ListBox = React.createClass({
+    propTypes: {
+        menu: React.PropTypes.string,
+        page: React.PropTypes.string,
+        id: React.PropTypes.string
+        //_query: React.PropTypes.object
+    },
     updateList: function (error, result) {
         if (error) {
             this.setState({
@@ -148,14 +174,17 @@ var ListBox = React.createClass({
         }
     },
     componentDidMount: function() {
+        console.log('mounted',this.props);
         this.loadFromServer(this.props.page);
     },
     componentWillReceiveProps: function (nextProps) {
+        console.log('received',nextProps);
         this.loadFromServer(nextProps.page);
     },
     render: function() {
+        console.log('rendered');
         return (
-            <EntryList list={this.state.list} page={this.state.page} now={this.props.page} />
+            <EntryList list={this.state.list} page={this.state.page} now={this.props.page} menu={this.props.menu} />
         );
     }
 });
