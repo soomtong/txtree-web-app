@@ -56,8 +56,8 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] save last data to local storage at every action in create menu
 - [x] load last data from local storage at start of create document
 - [x] set document live duration
-- [ ] load today list from cloud
-- [ ] curate list from cloud
+- [x] load today list from cloud
+- [x] curate list from cloud
 - [x] list order by types from cloud
 - [ ] favorite in cloud from local storage
 - [ ] document (type and color) theme

@@ -158,7 +158,14 @@ var ListBox = React.createClass({
         // filtering menu string
         if (Common.menu.menuList.indexOf(menu) == -1) menu = null;
 
-        Request.get(Common.txtree.entryPoint + 'list')
+        var param = 'list';
+
+        if (menu == 'today' || menu == 'curate') {
+            param = menu;
+            menu = 'newest';
+        }
+
+        Request.get(Common.txtree.entryPoint + param)
             //.withCredentials()
             .query({ p: page, s: Common.list.pageSize, order: menu ? menu : 'newest' })
             //.set('x-access-host', 'txtree')

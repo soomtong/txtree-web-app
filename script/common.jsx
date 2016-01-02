@@ -72,7 +72,7 @@ var menuData = {
             link: '/oldest'
         }
     ],
-    menuList: ['newest', 'hottest', 'coldest', 'oldest', 'commended', 'claimed'],
+    menuList: ['curate', 'today', 'newest', 'hottest', 'coldest', 'oldest', 'commended', 'claimed'],
     menuLink: function (active) {
         return active ? 'nav-link nav-link-active' : 'nav-link';
     }
