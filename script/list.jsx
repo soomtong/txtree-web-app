@@ -154,10 +154,13 @@ var ListBox = React.createClass({
             }
         }
     },
-    loadFromServer: function (page) {
+    loadFromServer: function (page, menu) {
+        // filtering menu string
+        if (Common.menu.menuList.indexOf(menu) == -1) menu = null;
+
         Request.get(Common.txtree.entryPoint + 'list')
             //.withCredentials()
-            .query({ p: page, s: Common.list.pageSize, order: 'newest' })
+            .query({ p: page, s: Common.list.pageSize, order: menu ? menu : 'newest' })
             //.set('x-access-host', 'txtree')
             //.set('Access-Control-Allow-Origin', '*')
             //.set('Access-Control-Allow-Credentials', 'true')
@@ -174,15 +177,12 @@ var ListBox = React.createClass({
         }
     },
     componentDidMount: function() {
-        console.log('mounted',this.props);
-        this.loadFromServer(this.props.page);
+        this.loadFromServer(this.props.page, this.props.menu);
     },
     componentWillReceiveProps: function (nextProps) {
-        console.log('received',nextProps);
-        this.loadFromServer(nextProps.page);
+        this.loadFromServer(nextProps.page, this.props.menu);
     },
     render: function() {
-        console.log('rendered');
         return (
             <EntryList list={this.state.list} page={this.state.page} now={this.props.page} menu={this.props.menu} />
         );

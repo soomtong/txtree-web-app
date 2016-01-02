@@ -17,6 +17,11 @@ var menuData = {
             active: false
         },
         {
+            title: 'Today',
+            link: '/today',
+            active: false
+        },
+        {
             title: 'Favorite',
             link: '/favorite',
             active: false
@@ -67,10 +72,10 @@ var menuData = {
             link: '/oldest'
         }
     ],
+    menuList: ['newest', 'hottest', 'coldest', 'oldest'],
     menuLink: function (active) {
         return active ? 'nav-link nav-link-active' : 'nav-link';
     }
-
 };
 
 var listData = {
