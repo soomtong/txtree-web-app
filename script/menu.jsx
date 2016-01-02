@@ -28,10 +28,10 @@ var Lead = React.createClass({
 
 var Nav = React.createClass({
     render: function () {
-        var now = this.props.menu ? this.props.menu + '/' : '';
+        var now = this.props.menu ? this.props.menu : '';
 
         var linkNodes = this.props.data.map(function (menu) {
-            var active = ('/' + now == (menu.link));
+            var active = ('/' + now) == menu.link;
 
             return (
                 <li className="nav-item" key={menu.title}>

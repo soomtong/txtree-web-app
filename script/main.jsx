@@ -21,6 +21,7 @@ var Menu = React.createClass({
         return (
             <Locations>
                 <Location path="/:menu" handler={MenuBox}/>
+                <Location path="/:menu/page/:page" handler={MenuBox}/>
                 <NotFound handler={MenuBox} />
             </Locations>
         );

@@ -58,7 +58,7 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] set document live duration
 - [ ] load today list from cloud
 - [ ] curate list from cloud
-- [ ] list order by types from cloud
+- [x] list order by types from cloud
 - [ ] favorite in cloud from local storage
 - [ ] document (type and color) theme
 - [ ] auto resize editor height
