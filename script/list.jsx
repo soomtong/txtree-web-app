@@ -60,16 +60,18 @@ var PageNav = React.createClass({
         if (menu) {
             if (now > 0) {
                 if (now == 1) {
-                    prev = <Link href={'/' + menu} className="paginate newer">Newer</Link>;
+                    //prev = <Link href={'/' + menu} className="paginate newer">Newer</Link>;
+                    prev = <Link href={`/${menu}`} className="paginate newer">Newer</Link>;
                 } else {
-                    prev = <Link href={'/' + menu + '/page/' + `${Number(now) - 1}`} className="paginate newer">Newer</Link>;
+                    //prev = <Link href={'/' + menu + '/page/' + `${Number(now) - 1}`} className="paginate newer">Newer</Link>;
+                    prev = <Link href={`/${menu}/page/${Number(now) - 1}`} className="paginate newer">Newer</Link>;
                 }
             } else {
                 prev = <span className="paginate previous">Newer</span>;
             }
 
             if (this.props.total > Number(now) + 1) {
-                next = <Link href={'/' + menu + '/page/' + `${Number(now) + 1}`} className="paginate older">Older</Link>;
+                next = <Link href={`/${menu}/page/${Number(now) + 1}`} className="paginate older">Older</Link>;
             } else {
                 next = <span className="paginate next">Older</span>;
             }
@@ -78,14 +80,14 @@ var PageNav = React.createClass({
                 if (now == 1) {
                     prev = <Link href='/' className="paginate newer">Newer</Link>;
                 } else {
-                    prev = <Link href={'/page/' + `${Number(now) - 1}`} className="paginate newer">Newer</Link>;
+                    prev = <Link href={`/page/${Number(now) - 1}`} className="paginate newer">Newer</Link>;
                 }
             } else {
                 prev = <span className="paginate previous">Newer</span>;
             }
 
             if (this.props.total > Number(now) + 1) {
-                next = <Link href={'/page/' + `${Number(now) + 1}`} className="paginate older">Older</Link>;
+                next = <Link href={`/page/${Number(now) + 1}`} className="paginate older">Older</Link>;
             } else {
                 next = <span className="paginate next">Older</span>;
             }

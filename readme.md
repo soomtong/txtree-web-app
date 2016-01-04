@@ -22,11 +22,11 @@ or
 
 ### test in local browser
 
-> node server.app
+> node server.js
 
 or 
 
-> nodemon server.app
+> nodemon server.js
 
 and open browser then connect app. refresh browser works everywhere
 
