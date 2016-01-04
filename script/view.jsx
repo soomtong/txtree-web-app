@@ -18,9 +18,48 @@ var Entry = React.createClass({
         };
     },
     componentDidMount: function () {
+        var list = [], data = storage.getItem('fav-list');
+
+        if (data) {
+            list = JSON.parse(data);
+        }
+
         this.setState({
-            favoriteList: storage.getItem('fav-list') || this.state.favoriteList
+            favoriteList: list
         });
+    },
+    setFavorite: function (e) {
+        e.preventDefault();
+
+        var list = Array.isArray(this.state.favoriteList) ? this.state.favoriteList : [];
+
+        if (list.length) {
+            list.push(this.props.id);
+        } else {
+            list = [this.props.id];
+        }
+
+        this.setState({
+            favoriteList: list
+        });
+
+        storage.setItem('fav-list', JSON.stringify(list));
+    },
+    unsetFavorite: function (e) {
+        e.preventDefault();
+        var list = Array.isArray(this.state.favoriteList) ? this.state.favoriteList : [];
+
+        var that = this;
+        var filtered = list.filter(function (item) {
+            return item != that.props.id;
+        });
+        //list.filter(item => item != this.props.id);
+
+        this.setState({
+            favoriteList: filtered
+        });
+
+        storage.setItem('fav-list', JSON.stringify(filtered));
     },
     render: function () {
         var title, feedback, favorite, data = this.props.data, time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
@@ -30,9 +69,9 @@ var Entry = React.createClass({
         }
 
         if (this.state.favoriteList.indexOf(this.props.id) > -1) {
-            favorite = <span className="glyphicon glyphicon-star" title="Marked Favorite"></span>;
+            favorite = <span className="glyphicon glyphicon-star" title="Marked Favorite" onClick={this.unsetFavorite}></span>;
         } else {
-            favorite = <span className="glyphicon glyphicon-star-empty" title="Click to Mark Favorite"></span>;
+            favorite = <span className="glyphicon glyphicon-star-empty" title="Click to Mark Favorite" onClick={this.setFavorite}></span>;
         }
 
         feedback = <p className="entry-date">{time}
