@@ -9,18 +9,38 @@ var ReactMarkdown = require('react-markdown');
 
 var Common = require('./common.jsx');
 
+var storage = window.localStorage;
+
 var Entry = React.createClass({
+    getInitialState: function() {
+        return {
+            favoriteList: []
+        };
+    },
+    componentDidMount: function () {
+        this.setState({
+            favoriteList: storage.getItem('fav-list') || this.state.favoriteList
+        });
+    },
     render: function () {
-        var title, feedback, data = this.props.data, time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
+        var title, feedback, favorite, data = this.props.data, time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
 
         if (data.title) {
             title = <h2 className="entry-title page-header">{data.title}</h2>;
         }
 
+        if (this.state.favoriteList.indexOf(this.props.id) > -1) {
+            favorite = <span className="glyphicon glyphicon-star" title="Marked Favorite"></span>;
+        } else {
+            favorite = <span className="glyphicon glyphicon-star-empty" title="Click to Mark Favorite"></span>;
+        }
+
         feedback = <p className="entry-date">{time}
-            <span className="view"><span className="glyphicon glyphicon-eye-open"></span> {data.view_count || 0}</span>
-            <span className="commend"><span className="glyphicon glyphicon-thumbs-up"></span> {data.commend_count || 0}</span>
-            <span className="claim"><span className="glyphicon glyphicon-thumbs-down"></span> {data.claim_count || 0}</span>
+            <span className="view"><span className="glyphicon glyphicon-eye-open"></span> {data['view_count'] || 0}</span>
+            <span className="commend"><span className="glyphicon glyphicon-thumbs-up"></span> {data['commend_count'] || 0}</span>
+            <span className="claim"><span className="glyphicon glyphicon-thumbs-down"></span> {data['claim_count'] || 0}</span>
+            <span className="divider"></span>
+            <span className="favorite">{favorite}</span>
         </p>;
 
         return (
@@ -64,7 +84,7 @@ var ViewBox = React.createClass({
     render: function() {
         return (
             <div className="viewing">
-                <Entry data={this.state.data}/>
+                <Entry data={this.state.data} id={this.props.id}/>
             </div>
         );
     }
