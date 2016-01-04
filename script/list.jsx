@@ -119,12 +119,14 @@ var EntryList = React.createClass({
 });
 
 var ListBox = React.createClass({
+/*
     propTypes: {
         menu: React.PropTypes.string,
         page: React.PropTypes.string,
         id: React.PropTypes.string
         //_query: React.PropTypes.object
     },
+*/
     updateList: function (error, result) {
         if (error) {
             this.setState({

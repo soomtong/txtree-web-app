@@ -12,13 +12,13 @@ var menuData = {
             active: true
         },
         {
-            title: 'Curate',
-            link: '/curate',
+            title: 'Today',
+            link: '/today',
             active: false
         },
         {
-            title: 'Today',
-            link: '/today',
+            title: 'Curate',
+            link: '/curate',
             active: false
         },
         {
