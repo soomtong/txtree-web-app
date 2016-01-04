@@ -14,6 +14,7 @@ var MenuBox = require('./menu.jsx');
 
 var ListBox = require('./list.jsx');
 var EditorBox = require('./editor.jsx');
+var FavoriteBox = require('./favorite.jsx');
 var ViewBox = require('./view.jsx');
 
 var Menu = React.createClass({
@@ -34,6 +35,7 @@ var Main = React.createClass({
             <Locations>
                 <Location path="/" handler={ListBox}/>
                 <Location path="/create" handler={EditorBox}/>
+                <Location path="/favorite" handler={FavoriteBox}/>
                 <Location path="/page/:page" handler={ListBox}/>
                 <Location path="/:menu" handler={ListBox}/>
                 <Location path="/:menu/page/:page" handler={ListBox}/>
