@@ -84,7 +84,8 @@ var Editor = React.createClass({
             title: this.refs.title.value.trim() || '',
             text: text,
             hasKeep: this.state.hasKeep,
-            keep: this.state.keep
+            keep: this.state.keep,
+            theme: 'markdown/github'
         };
 
         Request.post(Common.txtree.entryPoint + 'doc')
@@ -93,9 +94,7 @@ var Editor = React.createClass({
             .set('x-access-host', 'txtree')
             .end(function (err, res) {
                 if (res && res.ok) {
-                    //console.log('yay got ' + JSON.stringify(res.body));
-
-                    // move to that document view pag
+                    // move to that document view page
                     // http://stackoverflow.com/questions/25374945/redirection-with-react-router-component
                     environment.defaultEnvironment.navigate("/");
                 } else {

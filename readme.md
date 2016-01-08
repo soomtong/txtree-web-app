@@ -59,10 +59,10 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] load today list from cloud
 - [x] curate list from cloud
 - [x] list order by types from cloud
-- [ ] favorite in cloud from local storage
-- [ ] document (type and color) theme
+- [x] favorite in cloud from local storage
+- [x] ~~document (type and color) theme~~
+- [ ] set feedback for each document
 - [ ] auto resize editor height
 - [ ] clean up css name
-- [ ] hot key bind
 - [ ] bookmarklet
 - [ ] search in cloud
