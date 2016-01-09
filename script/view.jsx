@@ -14,6 +14,10 @@ var storage = window.localStorage;
 var Entry = React.createClass({
     getInitialState: function() {
         return {
+            feedback: {
+                commend: this.props.data['commend_count'],
+                claim: this.props.data['claim_count']
+            },
             favoriteList: [],
             commendedList: [],
             claimedList: []
@@ -41,16 +45,7 @@ var Entry = React.createClass({
             claimedList: claimedList
         });
     },
-    updateView: function (err, res) {
-        if (res && res.ok) {
-            var data = res.body.data;
-
-            this.setState({ data: data });
-        } else {
-            this.setState({ data: {} });
-        }
-    },
-    updateFeedbackToServer: function (id, params) {
+    updateFeedbackToServer: function (id, params, callback) {
         var content = {
             type: params.type,
             acc: params.acc
@@ -60,82 +55,113 @@ var Entry = React.createClass({
             .send(content)
             .set('Accept', 'application/json')
             .set('x-access-host', 'txtree')
-            .end(this.updateView);
+            .end(callback);
     },
     setCommend: function (e) {
         e.preventDefault();
+        var that = this;
+        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '+1' }, function (req, res) {
+            var list = Array.isArray(that.state.commendedList) ? that.state.commendedList : [];
 
-        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '+1' });
+            if (list.length) {
+                list.push(that.props.id);
+            } else {
+                list = [that.props.id];
+            }
 
-        var list = Array.isArray(this.state.commendedList) ? this.state.commendedList : [];
+            if (res && res.ok) {
+                var feedback = {
+                    commend: res.body.data['commend_count'],
+                    claim: res.body.data['claim_count']
+                };
+                that.setState({
+                    commendedList: list,
+                    feedback: feedback
+                });
 
-        if (list.length) {
-            list.push(this.props.id);
-        } else {
-            list = [this.props.id];
-        }
-
-        this.setState({
-            commendedList: list
+                storage.setItem('commended-list', JSON.stringify(list));
+            }
         });
-
-        storage.setItem('commended-list', JSON.stringify(list));
     },
     unsetCommend: function (e) {
         e.preventDefault();
-
-        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '-1' });
-
-        var list = Array.isArray(this.state.commendedList) ? this.state.commendedList : [];
-
         var that = this;
-        var filtered = list.filter(function (item) {
-            return item != that.props.id;
-        });
+        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '-1' }, function (req, res) {
+            var list = Array.isArray(that.state.commendedList) ? that.state.commendedList : [];
 
-        this.setState({
-            commendedList: filtered
-        });
+            var filtered = list.filter(function (item) {
+                return item != that.props.id;
+            });
 
-        storage.setItem('commended-list', JSON.stringify(filtered));
+            if (res && res.ok) {
+                var feedback = {
+                    commend: res.body.data['commend_count'],
+                    claim: res.body.data['claim_count']
+                };
+
+                console.log(feedback);
+
+                that.setState({
+                    commendedList: filtered,
+                    feedback: feedback
+                });
+
+                storage.setItem('commended-list', JSON.stringify(filtered));
+            }
+        });
     },
     setClaim: function (e) {
         e.preventDefault();
+        var that = this;
+        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '+1' }, function (req, res) {
+            var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
 
-        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '+1' });
+            if (list.length) {
+                list.push(that.props.id);
+            } else {
+                list = [that.props.id];
+            }
 
-        var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
+            if (res && res.ok) {
+                var feedback = {
+                    commend: res.body.data['commend_count'],
+                    claim: res.body.data['claim_count']
+                };
+                that.setState({
+                    claimedList: list,
+                    feedback: feedback
+                });
 
-        if (list.length) {
-            list.push(this.props.id);
-        } else {
-            list = [this.props.id];
-        }
-
-        this.setState({
-            claimedList: list
+                storage.setItem('claimed-list', JSON.stringify(list));
+            }
         });
-
-        storage.setItem('claimed-list', JSON.stringify(list));
     },
     unsetClaim: function (e) {
         e.preventDefault();
-
-        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '-1' });
-
-        var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
-
         var that = this;
-        var filtered = list.filter(function (item) {
-            return item != that.props.id;
+        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '-1' }, function (req, res) {
+            var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
+
+            var filtered = list.filter(function (item) {
+                return item != that.props.id;
+            });
+
+            if (res && res.ok) {
+                var feedback = {
+                    commend: res.body.data['commend_count'],
+                    claim: res.body.data['claim_count']
+                };
+
+                console.log(feedback);
+
+                that.setState({
+                    claimedList: filtered,
+                    feedback: feedback
+                });
+
+                storage.setItem('claimed-list', JSON.stringify(filtered));
+            }
         });
-
-        this.setState({
-            claimedList: filtered
-        });
-
-        storage.setItem('claimed-list', JSON.stringify(filtered));
-
     },
     setFavorite: function (e) {
         e.preventDefault();
@@ -195,10 +221,11 @@ var Entry = React.createClass({
             favorite = <span className="glyphicon glyphicon-star-empty" title="Click to Mark Favorite" onClick={this.setFavorite}></span>;
         }
 
+        console.log(this.state.feedback['commend'], this.state.feedback['claim']);
         feedback = <p className="entry-date">{time}
             <span className="view"><span className="glyphicon glyphicon-eye-open"></span> {data['view_count'] || 0}</span>
-            <span className="commend">{commend} {data['commend_count'] || 0}</span>
-            <span className="claim">{claim} {data['claim_count'] || 0}</span>
+            <span className="commend">{commend} {this.state.feedback['commend'] > -1 ? this.state.feedback['commend'] : data['commend_count']}</span>
+            <span className="claim">{claim} {this.state.feedback['claim'] > -1 ? this.state.feedback['claim'] : data['claim_count']}</span>
             <span className="divider"></span>
             <span className="favorite">{favorite}</span>
         </p>;
