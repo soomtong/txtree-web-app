@@ -41,6 +41,15 @@ var Entry = React.createClass({
             claimedList: claimedList
         });
     },
+    updateView: function (err, res) {
+        if (res && res.ok) {
+            var data = res.body.data;
+
+            this.setState({ data: data });
+        } else {
+            this.setState({ data: {} });
+        }
+    },
     updateFeedbackToServer: function (id, params) {
         var content = {
             type: params.type,
@@ -56,7 +65,7 @@ var Entry = React.createClass({
     setCommend: function (e) {
         e.preventDefault();
 
-        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: true });
+        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '+1' });
 
         var list = Array.isArray(this.state.commendedList) ? this.state.commendedList : [];
 
@@ -75,7 +84,7 @@ var Entry = React.createClass({
     unsetCommend: function (e) {
         e.preventDefault();
 
-        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: false });
+        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '-1' });
 
         var list = Array.isArray(this.state.commendedList) ? this.state.commendedList : [];
 
@@ -93,7 +102,7 @@ var Entry = React.createClass({
     setClaim: function (e) {
         e.preventDefault();
 
-        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: true });
+        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '+1' });
 
         var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
 
@@ -108,15 +117,11 @@ var Entry = React.createClass({
         });
 
         storage.setItem('claimed-list', JSON.stringify(list));
-
-        console.log('favorite',this.state.favoriteList);
-        console.log('commended',this.state.commendedList);
-        console.log('claimed',this.state.claimedList);
     },
     unsetClaim: function (e) {
         e.preventDefault();
 
-        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: false });
+        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '-1' });
 
         var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
 
