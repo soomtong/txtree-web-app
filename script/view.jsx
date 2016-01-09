@@ -19,30 +19,32 @@ var Entry = React.createClass({
                 claim: this.props.data['claim_count']
             },
             favoriteList: [],
-            commendedList: [],
-            claimedList: []
+            commendList: [],
+            claimList: []
         };
     },
     componentDidMount: function () {
         var favoriteList = [], commendedList = [], claimedList = [];
-        var favoriteData = storage.getItem('favorite-list'), commendedData = storage.getItem('commended-list'), claimedData = storage.getItem('claimed-list');
+        var favoriteData = storage.getItem('favorite-list'),
+            commendData = storage.getItem('commend-list'),
+            claimData = storage.getItem('claim-list');
 
         if (favoriteData) {
             favoriteList = JSON.parse(favoriteData);
         }
 
-        if (commendedData) {
-            commendedList = JSON.parse(commendedData);
+        if (commendData) {
+            commendedList = JSON.parse(commendData);
         }
 
-        if (claimedData) {
-            claimedList = JSON.parse(claimedData);
+        if (claimData) {
+            claimedList = JSON.parse(claimData);
         }
 
         this.setState({
             favoriteList: favoriteList,
-            commendedList: commendedList,
-            claimedList: claimedList
+            commendList: commendedList,
+            claimList: claimedList
         });
     },
     updateFeedbackToServer: function (id, params, callback) {
@@ -61,7 +63,7 @@ var Entry = React.createClass({
         e.preventDefault();
         var that = this;
         this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '+1' }, function (req, res) {
-            var list = Array.isArray(that.state.commendedList) ? that.state.commendedList : [];
+            var list = Array.isArray(that.state.commendList) ? that.state.commendList : [];
 
             if (list.length) {
                 list.push(that.props.id);
@@ -75,11 +77,11 @@ var Entry = React.createClass({
                     claim: res.body.data['claim_count']
                 };
                 that.setState({
-                    commendedList: list,
+                    commendList: list,
                     feedback: feedback
                 });
 
-                storage.setItem('commended-list', JSON.stringify(list));
+                storage.setItem('commend-list', JSON.stringify(list));
             }
         });
     },
@@ -87,7 +89,7 @@ var Entry = React.createClass({
         e.preventDefault();
         var that = this;
         this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: '-1' }, function (req, res) {
-            var list = Array.isArray(that.state.commendedList) ? that.state.commendedList : [];
+            var list = Array.isArray(that.state.commendList) ? that.state.commendList : [];
 
             var filtered = list.filter(function (item) {
                 return item != that.props.id;
@@ -99,14 +101,12 @@ var Entry = React.createClass({
                     claim: res.body.data['claim_count']
                 };
 
-                console.log(feedback);
-
                 that.setState({
-                    commendedList: filtered,
+                    commendList: filtered,
                     feedback: feedback
                 });
 
-                storage.setItem('commended-list', JSON.stringify(filtered));
+                storage.setItem('commend-list', JSON.stringify(filtered));
             }
         });
     },
@@ -114,7 +114,7 @@ var Entry = React.createClass({
         e.preventDefault();
         var that = this;
         this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '+1' }, function (req, res) {
-            var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
+            var list = Array.isArray(that.state.claimList) ? that.state.claimList : [];
 
             if (list.length) {
                 list.push(that.props.id);
@@ -127,12 +127,13 @@ var Entry = React.createClass({
                     commend: res.body.data['commend_count'],
                     claim: res.body.data['claim_count']
                 };
+
                 that.setState({
-                    claimedList: list,
+                    claimList: list,
                     feedback: feedback
                 });
 
-                storage.setItem('claimed-list', JSON.stringify(list));
+                storage.setItem('claim-list', JSON.stringify(list));
             }
         });
     },
@@ -140,7 +141,7 @@ var Entry = React.createClass({
         e.preventDefault();
         var that = this;
         this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: '-1' }, function (req, res) {
-            var list = Array.isArray(this.state.claimedList) ? this.state.claimedList : [];
+            var list = Array.isArray(that.state.claimList) ? that.state.claimList : [];
 
             var filtered = list.filter(function (item) {
                 return item != that.props.id;
@@ -152,14 +153,12 @@ var Entry = React.createClass({
                     claim: res.body.data['claim_count']
                 };
 
-                console.log(feedback);
-
                 that.setState({
-                    claimedList: filtered,
+                    claimList: filtered,
                     feedback: feedback
                 });
 
-                storage.setItem('claimed-list', JSON.stringify(filtered));
+                storage.setItem('claim-list', JSON.stringify(filtered));
             }
         });
     },
@@ -203,13 +202,13 @@ var Entry = React.createClass({
             title = <h2 className="entry-title page-header">{data.title}</h2>;
         }
 
-        if (this.state.commendedList.indexOf(this.props.id) > -1) {
+        if (this.state.commendList.indexOf(this.props.id) > -1) {
             commend = <span className="glyphicon glyphicon-thumbs-up" onClick={this.unsetCommend}></span>;
         } else {
             commend = <span className="glyphicon glyphicon-thumbs-up feedback-able" onClick={this.setCommend}></span>;
         }
 
-        if (this.state.claimedList.indexOf(this.props.id) > -1) {
+        if (this.state.claimList.indexOf(this.props.id) > -1) {
             claim = <span className="glyphicon glyphicon-thumbs-down" onClick={this.unsetClaim}></span>;
         } else {
             claim = <span className="glyphicon glyphicon-thumbs-down feedback-able" onClick={this.setClaim}></span>;
@@ -221,7 +220,6 @@ var Entry = React.createClass({
             favorite = <span className="glyphicon glyphicon-star-empty" title="Click to Mark Favorite" onClick={this.setFavorite}></span>;
         }
 
-        console.log(this.state.feedback['commend'], this.state.feedback['claim']);
         feedback = <p className="entry-date">{time}
             <span className="view"><span className="glyphicon glyphicon-eye-open"></span> {data['view_count'] || 0}</span>
             <span className="commend">{commend} {this.state.feedback['commend'] > -1 ? this.state.feedback['commend'] : data['commend_count']}</span>
