@@ -14,7 +14,11 @@ var storage = window.localStorage;
 var Entry = React.createClass({
     getInitialState: function() {
         return {
-            favoriteList: []
+            favoriteList: [],
+            feedbackList: {
+                commend: [],
+                claim: []
+            }
         };
     },
     componentDidMount: function () {
@@ -27,6 +31,29 @@ var Entry = React.createClass({
         this.setState({
             favoriteList: list
         });
+    },
+    updateFeedbackToServer: function (id, params) {
+        var content = {
+            type: params.type,
+            acc: params.acc
+        };
+        Request.post(Common.txtree.entryPoint + 'doc/' + id + '/feedback')
+            .send(content)
+            .set('Accept', 'application/json')
+            .set('x-access-host', 'txtree')
+            .end(this.updateView);
+    },
+    setCommend: function (e) {
+        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: true });
+    },
+    unsetCommend: function (e) {
+        this.updateFeedbackToServer(this.props.id, { type: 'commend', acc: false });
+    },
+    setClaim: function (e) {
+        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: true });
+    },
+    unsetClaim: function (e) {
+        this.updateFeedbackToServer(this.props.id, { type: 'claim', acc: false });
     },
     setFavorite: function (e) {
         e.preventDefault();
@@ -53,7 +80,6 @@ var Entry = React.createClass({
         var filtered = list.filter(function (item) {
             return item != that.props.id;
         });
-        //list.filter(item => item != this.props.id);
 
         this.setState({
             favoriteList: filtered
@@ -62,10 +88,23 @@ var Entry = React.createClass({
         storage.setItem('fav-list', JSON.stringify(filtered));
     },
     render: function () {
-        var title, feedback, favorite, data = this.props.data, time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
+        var title, feedback, favorite, commend, claim;
+        var data = this.props.data, time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
 
         if (data.title) {
             title = <h2 className="entry-title page-header">{data.title}</h2>;
+        }
+
+        if (data.commended) {
+            commend = <span className="glyphicon glyphicon-thumbs-up" onClick={this.unsetCommend}></span>;
+        } else {
+            commend = <span className="glyphicon glyphicon-thumbs-up feedback-able" onClick={this.setCommend}></span>;
+        }
+
+        if (data.claimed) {
+            claim = <span className="glyphicon glyphicon-thumbs-down" onClick={this.unsetClaim}></span>;
+        } else {
+            claim = <span className="glyphicon glyphicon-thumbs-down feedback-able" onClick={this.setClaim}></span>;
         }
 
         if (this.state.favoriteList.indexOf(this.props.id) > -1) {
@@ -76,8 +115,8 @@ var Entry = React.createClass({
 
         feedback = <p className="entry-date">{time}
             <span className="view"><span className="glyphicon glyphicon-eye-open"></span> {data['view_count'] || 0}</span>
-            <span className="commend"><span className="glyphicon glyphicon-thumbs-up"></span> {data['commend_count'] || 0}</span>
-            <span className="claim"><span className="glyphicon glyphicon-thumbs-down"></span> {data['claim_count'] || 0}</span>
+            <span className="commend">{commend} {data['commend_count'] || 0}</span>
+            <span className="claim">{claim} {data['claim_count'] || 0}</span>
             <span className="divider"></span>
             <span className="favorite">{favorite}</span>
         </p>;
@@ -111,7 +150,7 @@ var ViewBox = React.createClass({
         }
     },
     loadFromServer: function (id) {
-        var theme = 'default';
+        var theme = 'markdown/github';
 
         Request.get(Common.txtree.entryPoint + 'doc/' + id)
             //.withCredentials()
