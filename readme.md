@@ -61,8 +61,8 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] list order by types from cloud
 - [x] favorite in cloud from local storage
 - [x] ~~document (type and color) theme~~
-- [ ] set feedback for each document
-- [ ] auto resize editor height
+- [x] set feedback for each document
+- [x] auto resize editor height
 - [ ] clean up css name
 - [ ] bookmarklet
 - [ ] search in cloud

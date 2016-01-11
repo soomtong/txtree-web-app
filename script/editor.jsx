@@ -48,6 +48,10 @@ var Editor = React.createClass({
         this.setState({
             text: storage.getItem('last-text') || this.state.text
         });
+
+        window.addEventListener("resize", this.onWindowResize);
+
+        this.onWindowResize();
     },
     componentWillUnmount: function () {
         var that = this;
@@ -64,6 +68,13 @@ var Editor = React.createClass({
 
         // save data to local storage
         storage.setItem('last-text', this.state.text);
+
+        window.removeEventListener("resize", this.onWindowResize);
+    },
+    onWindowResize () {
+        var height = window.innerHeight - 275;
+        //console.log({windowWidth: window.innerWidth, windowHeight: window.innerHeight});
+        document.getElementsByClassName('CodeMirror')[0].style.minHeight = height + 'px';
     },
     onChangeHasKeep() {
         this.setState({
@@ -141,7 +152,11 @@ var Editor = React.createClass({
         var editorOptions = {
             lineNumbers: true,
             viewportMargin: Infinity,
-            mode: 'markdown'
+            mode: 'markdown',
+            autoHeight: true,
+            minHeight: function () {
+                return 600;
+            }
         };
 
         var icon = {
