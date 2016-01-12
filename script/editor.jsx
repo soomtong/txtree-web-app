@@ -14,7 +14,7 @@ require('codemirror/mode/markdown/markdown');
 
 var Common = require('./common.jsx');
 
-var isMac = navigator.userAgent.indexOf("Mac OS X") != -1;
+var isMac = navigator.userAgent.indexOf('Mac OS X') != -1;
 var storage = window.localStorage;
 
 var Editor = React.createClass({
@@ -22,7 +22,7 @@ var Editor = React.createClass({
         var today = new Date();
         return {
             mode: false,
-            text: "## Txtree document based on Markdown",
+            text: '## Txtree document based on Markdown',
             hasKeep: false,
             keep: {
                 year: today.getFullYear(),
@@ -49,7 +49,7 @@ var Editor = React.createClass({
             text: storage.getItem('last-text') || this.state.text
         });
 
-        window.addEventListener("resize", this.onWindowResize);
+        window.addEventListener('resize', this.onWindowResize);
 
         this.onWindowResize();
     },
@@ -69,7 +69,7 @@ var Editor = React.createClass({
         // save data to local storage
         storage.setItem('last-text', this.state.text);
 
-        window.removeEventListener("resize", this.onWindowResize);
+        window.removeEventListener('resize', this.onWindowResize);
     },
     onWindowResize () {
         var height = window.innerHeight - 275;
@@ -107,7 +107,7 @@ var Editor = React.createClass({
                 if (res && res.ok) {
                     // move to that document view page
                     // http://stackoverflow.com/questions/25374945/redirection-with-react-router-component
-                    environment.defaultEnvironment.navigate("/");
+                    environment.defaultEnvironment.navigate('/');
                 } else {
                     alert('Oh no! errors there ' + res.text);
                 }
@@ -160,8 +160,8 @@ var Editor = React.createClass({
         };
 
         var icon = {
-            edit: <span onClick={this.toggleState} className="preview glyphicon glyphicon-check" title={ (isMac? 'CMD':'Ctrl') + 'Enter'}></span>,
-            view: <span onClick={this.toggleState} className="edit glyphicon glyphicon-edit" title={ (isMac? 'CMD':'Ctrl') + 'Enter'}></span>
+            edit: <span onClick={this.toggleState} className="preview glyphicon glyphicon-check" title={ (isMac? "CMD":"Ctrl") + "Enter"}/>,
+            view: <span onClick={this.toggleState} className="edit glyphicon glyphicon-edit" title={ (isMac? "CMD":"Ctrl") + "Enter"}/>
         };
 
         var yearEntry = [2015, 2016, 2017].map(function (item) {

@@ -58,13 +58,13 @@ var ListOrder = React.createClass({
                 );
             } else {
                 return (
-                    <li role="separator" className="divider" key={menu.title}></li>
+                    <li role="separator" className="divider" key={menu.title} />
                 );
             }
         });
         return (
             <div className="btn-group">
-                <button type="button" className="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Order <span className="caret"></span>
+                <button type="button" className="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">List Order <span className="caret" />
                 </button>
                 <ul className="dropdown-menu">
                     {listNodes}

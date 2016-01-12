@@ -1,6 +1,6 @@
 var React = require('react');
 
-var Router = require('react-router-component');
+//var Router = require('react-router-component');
 
 var Moment = require('moment');
 var Request = require('superagent');
@@ -203,28 +203,28 @@ var Entry = React.createClass({
         }
 
         if (this.state.commendList.indexOf(this.props.id) > -1) {
-            commend = <span className="glyphicon glyphicon-thumbs-up" onClick={this.unsetCommend}></span>;
+            commend = <span className="glyphicon glyphicon-thumbs-up" onClick={this.unsetCommend} />;
         } else {
-            commend = <span className="glyphicon glyphicon-thumbs-up feedback-able" onClick={this.setCommend}></span>;
+            commend = <span className="glyphicon glyphicon-thumbs-up feedback-able" onClick={this.setCommend} />;
         }
 
         if (this.state.claimList.indexOf(this.props.id) > -1) {
-            claim = <span className="glyphicon glyphicon-thumbs-down" onClick={this.unsetClaim}></span>;
+            claim = <span className="glyphicon glyphicon-thumbs-down" onClick={this.unsetClaim} />;
         } else {
-            claim = <span className="glyphicon glyphicon-thumbs-down feedback-able" onClick={this.setClaim}></span>;
+            claim = <span className="glyphicon glyphicon-thumbs-down feedback-able" onClick={this.setClaim} />;
         }
 
         if (this.state.favoriteList.indexOf(this.props.id) > -1) {
-            favorite = <span className="glyphicon glyphicon-star" title="Marked Favorite" onClick={this.unsetFavorite}></span>;
+            favorite = <span className="glyphicon glyphicon-star" title="Marked Favorite" onClick={this.unsetFavorite} />;
         } else {
-            favorite = <span className="glyphicon glyphicon-star-empty" title="Click to Mark Favorite" onClick={this.setFavorite}></span>;
+            favorite = <span className="glyphicon glyphicon-star-empty" title="Click to Mark Favorite" onClick={this.setFavorite} />;
         }
 
         feedback = <p className="entry-date">{time}
-            <span className="view"><span className="glyphicon glyphicon-eye-open"></span> {data['view_count'] || 0}</span>
+            <span className="view"><span className="glyphicon glyphicon-eye-open" /> {data['view_count'] || 0}</span>
             <span className="commend">{commend} {this.state.feedback['commend'] > -1 ? this.state.feedback['commend'] : data['commend_count']}</span>
             <span className="claim">{claim} {this.state.feedback['claim'] > -1 ? this.state.feedback['claim'] : data['claim_count']}</span>
-            <span className="divider"></span>
+            <span className="divider" />
             <span className="favorite">{favorite}</span>
         </p>;
 
@@ -269,7 +269,7 @@ var ViewBox = React.createClass({
     render: function() {
         return (
             <div className="viewing">
-                <Entry data={this.state.data} id={this.props.id}/>
+                <Entry data={this.state.data} id={this.props.id} />
             </div>
         );
     }

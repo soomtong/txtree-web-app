@@ -16,12 +16,12 @@ var Entry = React.createClass({
 
         if (data.title) {
             title = <h2 className="entry-title">
-                <Link href={'/view/' + data._id}>
+                <Link href={"/view/" + data._id}>
                     {data.title}
                 </Link>
             </h2>;
         } else {
-            title = <h2 className="entry-title"></h2>
+            title = <h2 className="entry-title" />
         }
 
         var text = data.text.split(/\r*\n/);
@@ -38,7 +38,7 @@ var Entry = React.createClass({
 
         return (
             <div className="entry">
-                <Link href={'/view/' + data._id} className="entry-thumb">
+                <Link href={"/view/" + data._id} className="entry-thumb">
                     {textNodes}
                 </Link>
 
@@ -78,7 +78,7 @@ var PageNav = React.createClass({
         } else {
             if (now > 0) {
                 if (now == 1) {
-                    prev = <Link href='/' className="paginate newer">Newer</Link>;
+                    prev = <Link href="/" className="paginate newer">Newer</Link>;
                 } else {
                     prev = <Link href={`/page/${Number(now) - 1}`} className="paginate newer">Newer</Link>;
                 }
