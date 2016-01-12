@@ -9,7 +9,7 @@ var Link = Router.Link;
 var Title = React.createClass({
     render: function () {
         return (
-            <h1 className="masthead-title">
+            <h1 className="main-menu-title">
                 <Link href={`${Common.menu.menu1[0].link}`}>{Common.txtree.title}</Link>
             </h1>
         );
@@ -19,7 +19,7 @@ var Title = React.createClass({
 var Lead = React.createClass({
     render: function () {
         return (
-            <p className="masthead-lead">
+            <p className="main-menu-lead">
                 Some anonymous documents of <Link href={`${Common.menu.menu1[0].link}`}>{Common.txtree.title}</Link> hosted by <a href="http://haroocloud.com" target="_blank">Haroo Cloud</a>
             </p>
         );
@@ -40,7 +40,7 @@ var Nav = React.createClass({
             );
         });
         return (
-            <ul className="masthead-nav">
+            <ul className="main-menu-nav">
                 {linkNodes}
             </ul>
         );
@@ -89,19 +89,19 @@ var AdBox = React.createClass({
 var MenuBox = React.createClass({
     render: function() {
         return (
-            <div className="masthead">
+            <div className="main-menu">
                 <Title />
                 <Lead />
-                <hr className="masthead-hr" />
+                <hr className="main-menu-hr" />
                 <Nav data={Common.menu.menu1} menu={this.props.menu} />
-                <hr className="masthead-hr" />
+                <hr className="main-menu-hr" />
                 <Nav data={Common.menu.menu2} menu={this.props.menu} />
                 <ListOrder data={Common.menu.menu4} menu={this.props.menu} />
-                <hr className="masthead-hr" />
+                <hr className="main-menu-hr" />
                 <Nav data={Common.menu.menu3} menu={this.props.menu} />
-                <hr className="masthead-hr" />
+                <hr className="main-menu-hr" />
                 <AdBox />
-                <hr className="masthead-hr visible-xs" />
+                <hr className="main-menu-hr visible-xs" />
             </div>
         );
     }

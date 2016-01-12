@@ -72,6 +72,7 @@ var Editor = React.createClass({
         window.removeEventListener('resize', this.onWindowResize);
     },
     onWindowResize () {
+        // http://stackoverflow.com/questions/19014250/reactjs-rerender-on-browser-resize
         var height = window.innerHeight - 275;
         //console.log({windowWidth: window.innerWidth, windowHeight: window.innerHeight});
         document.getElementsByClassName('CodeMirror')[0].style.minHeight = height + 'px';
