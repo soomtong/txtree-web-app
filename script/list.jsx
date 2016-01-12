@@ -2,13 +2,14 @@ var React = require('react');
 
 var Router = require('react-router-component');
 
-var Moment = require('moment');
 var Request = require('superagent');
 
 var Common = require('./common.jsx');
+var Entry = require('./entry.jsx');
 
 var Link = Router.Link;
 
+/*
 var Entry = React.createClass({
     render: function () {
         var data = this.props.data || {};
@@ -50,6 +51,7 @@ var Entry = React.createClass({
         );
     }
 });
+*/
 
 var PageNav = React.createClass({
     render: function () {

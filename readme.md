@@ -63,6 +63,8 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] ~~document (type and color) theme~~
 - [x] set feedback for each document
 - [x] auto resize editor height
-- [ ] clean up css name
+- [x] clean up css name
+- [ ] describe other pages
 - [ ] bookmarklet
 - [ ] search in cloud
+- [x] refactoring common entry list

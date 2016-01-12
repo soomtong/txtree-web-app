@@ -36,6 +36,7 @@ var Main = React.createClass({
                 <Location path="/" handler={ListBox} />
                 <Location path="/create" handler={EditorBox} />
                 <Location path="/favorite" handler={FavoriteBox} />
+                <Location path="/search" handler={FavoriteBox} />
                 <Location path="/page/:page" handler={ListBox} />
                 <Location path="/:menu" handler={ListBox} />
                 <Location path="/:menu/page/:page" handler={ListBox} />
