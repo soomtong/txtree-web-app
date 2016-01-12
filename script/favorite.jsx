@@ -92,7 +92,7 @@ var FavoriteBox = React.createClass({
                         favoriteList.push(item._id);
                     });
 
-                    storage.setItem('fav-list', JSON.stringify(favoriteList));
+                    storage.setItem('favorite-list', JSON.stringify(favoriteList));
                 }
 
                 this.setState({
@@ -118,7 +118,7 @@ var FavoriteBox = React.createClass({
             .end(this.updateList);
     },
     componentDidMount: function () {
-        var list = [], data = storage.getItem('fav-list');
+        var list = [], data = storage.getItem('favorite-list');
 
         if (data) {
             list = JSON.parse(data);
