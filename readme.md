@@ -66,5 +66,6 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] clean up css name
 - [ ] describe other pages
 - [ ] bookmarklet
-- [ ] search in cloud
+- [x] search in cloud
 - [x] refactoring common entry list
+- [ ] remove jquery stub
