@@ -1,7 +1,8 @@
 var txtreeData = {
     title: 'Txtree',
     version: '1.0',
-    entryPoint: $("meta[name=hostname]").attr('content') + '/api/tree/'
+    //entryPoint: $("meta[name=hostname]").attr('content') + '/api/tree/'
+    entryPoint: document.querySelector('meta[name=hostname]').getAttribute('content') + '/api/tree/'
 };
 
 var menuData = {

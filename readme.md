@@ -68,4 +68,4 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [ ] bookmarklet
 - [x] search in cloud
 - [x] refactoring common entry list
-- [ ] remove jquery stub
+- [x] remove jquery stub
