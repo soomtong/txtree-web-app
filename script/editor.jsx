@@ -50,6 +50,7 @@ var Editor = React.createClass({
         });
 
         window.addEventListener('resize', this.onWindowResize);
+        document.getElementsByClassName('toggle-mode')[0].addEventListener('click', this.toggleState);
 
         this.onWindowResize();
     },
@@ -70,12 +71,16 @@ var Editor = React.createClass({
         storage.setItem('last-text', this.state.text);
 
         window.removeEventListener('resize', this.onWindowResize);
+        document.getElementsByClassName('toggle-mode')[0].removeEventListener('click', this.toggleState);
     },
     onWindowResize () {
         // http://stackoverflow.com/questions/19014250/reactjs-rerender-on-browser-resize
         var height = window.innerHeight - 275;
         //console.log({windowWidth: window.innerWidth, windowHeight: window.innerHeight});
-        document.getElementsByClassName('CodeMirror')[0].style.minHeight = height + 'px';
+
+        if (document.getElementsByClassName('CodeMirror').length) {
+            document.getElementsByClassName('CodeMirror')[0].style.minHeight = height + 'px';
+        }
     },
     onChangeHasKeep() {
         this.setState({
@@ -116,15 +121,10 @@ var Editor = React.createClass({
 
         return false;
     },
-    handlePreviewToggle: function (e) {
-        if (e.altKey && e.ctrlKey && e.keyCode === 13) {
-            e.preventDefault();
-
-            this.toggleState();
-        }
-    },
     toggleState: function () {
         this.setState({ mode: !this.state.mode});
+
+        this.onWindowResize();
     },
     updateText: function(newText) {
         this.setState({
@@ -161,8 +161,8 @@ var Editor = React.createClass({
         };
 
         var icon = {
-            edit: <span onClick={this.toggleState} className="preview glyphicon glyphicon-check" title={ (isMac? "CMD":"Ctrl") + "Enter"}/>,
-            view: <span onClick={this.toggleState} className="edit glyphicon glyphicon-edit" title={ (isMac? "CMD":"Ctrl") + "Enter"}/>
+            edit: <span className="toggle-mode edit glyphicon glyphicon-edit" title={ (isMac? "CMD":"Ctrl") + "Enter"}/>,
+            view: <span className="toggle-mode preview glyphicon glyphicon-check" title={ (isMac? "CMD":"Ctrl") + "Enter"}/>
         };
 
         var yearEntry = [2015, 2016, 2017].map(function (item) {
@@ -199,10 +199,10 @@ var Editor = React.createClass({
             </div>
         };
 
-        var selectedIcon = this.state.mode ? icon.view : icon.edit;
+        var selectedIcon = this.state.mode ? icon.edit : icon.view;
         var selectedPanel = this.state.mode ? panel.view : panel.edit;
 
-        var dueToSelector = this.state.hasKeep? panel.calendar : '';
+        var dueToSelector = this.state.hasKeep ? panel.calendar : '';
 
         return (
             <div className="page">
