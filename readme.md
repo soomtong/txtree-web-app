@@ -10,23 +10,23 @@ prepare browserify, babelify with npm, and provide simple web server for root ro
 
 ### build script
 
-> browserify -t babelify  script/*.jsx -o script/build.js
+> `browserify -t babelify  script/*.jsx -o script/build.js`
 
 or 
 
-> gulp browserify
+> `gulp browserify`
 
 ### build stylesheet
 
-> gulp stylesheet
+> `gulp stylesheet`
 
 ### test in local browser
 
-> node server.js
+> `node server.js`
 
 or 
 
-> nodemon server.js
+> `nodemon server.js`
 
 and open browser then connect app. refresh browser works everywhere
 
