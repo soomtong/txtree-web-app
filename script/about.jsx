@@ -7,7 +7,7 @@ var AboutBox = React.createClass({
         return {
             data: {
                 text: `
-# Share document anonymously.
+# Share Text Document Anonymously.
 
 ## About Txtree
 
@@ -24,6 +24,29 @@ use toggle view/edit mode for your document review
 
 - toggle button below in editor area
 - keyboard short cut CTRL+ENTER (CMD+RETURN on Mac)
+
+## Privacy Information
+
+Txtree use local storage for your latest document saving. and only one cookie dropped in browser for your session.
+
+This site does not use any tracking or logging features.
+
+## FAQ
+
+### Edit or Delete my document?
+
+No, it can't. just shared document has no ownership. Txtree don't know who make this document.
+
+But u can set erase time for your document, use 'Set due to' feature.
+
+## Disclaimer
+
+All source code and development logs exists in Github repository. Visit Here.
+
+- [Txtree](https://github.com/soomtong/txtree-web-app)
+- [Haroo Cloud Core](https://github.com/soomtong/haroo-cloud-core)
+
+
 `
             }
         }
