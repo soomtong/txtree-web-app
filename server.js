@@ -15,7 +15,9 @@ nunjucks.configure('view', {
 });
 
 server.use(express.static(__dirname));
-
+server.get('/1/bookmarklet', function (req, res) {
+    res.send('hi');
+});
 server.all('*', function (req, res) {
     var params = {};
 
