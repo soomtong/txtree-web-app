@@ -15,11 +15,11 @@ nunjucks.configure('view', {
 });
 
 server.use(express.static(__dirname));
-server.get('/1/bookmarklet', function (req, res) {
-    var text = `
-    alert('hi server');
-    `;
-    res.end(text);
+server.get('/embed/bookmarklet', function (req, res) {
+    const fs = require('fs');
+    fs.readFile('view/bookmarklet.js', { encoding: 'utf-8', flag: 'r' }, function (err, data) {
+        res.end(data);
+    });
 });
 server.all('*', function (req, res) {
     var params = {};
