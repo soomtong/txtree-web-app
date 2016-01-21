@@ -1,7 +1,7 @@
 const app = {
     port: 3031,
     dev: 'http://localhost:3030',
-    prod: 'http://haroocloud.com'
+    prod: 'https://haroocloud.com'
 };
 
 const express = require('express');
