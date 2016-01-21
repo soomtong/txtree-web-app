@@ -64,8 +64,8 @@ use simple web server to access directly for root, something like 'http-serve' o
 - [x] set feedback for each document
 - [x] auto resize editor height
 - [x] clean up css name
-- [ ] describe other pages
-- [ ] bookmarklet
+- [x] describe other pages
+- [x] bookmarklet
 - [x] search in cloud
 - [x] refactoring common entry list
 - [x] remove jquery stub
