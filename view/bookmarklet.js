@@ -30,7 +30,7 @@ var txtreeEmbed = {
                 }
             }
         };
-        httpRequest.open('POST', 'http://haroocloud.com/api/tree/doc');
+        httpRequest.open('POST', '{{hostname}}/api/tree/doc');
         httpRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         httpRequest.setRequestHeader("X-Access-Host", "txtree-bookmarklet");
         httpRequest.send(JSON.stringify({ theme: 'markdown/github', text: doc }));

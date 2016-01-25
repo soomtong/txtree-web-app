@@ -16,10 +16,11 @@ nunjucks.configure('view', {
 
 server.use(express.static(__dirname));
 server.get('/embed/bookmarklet', function (req, res) {
-    const fs = require('fs');
-    fs.readFile('view/bookmarklet.js', { encoding: 'utf-8', flag: 'r' }, function (err, data) {
-        res.end(data);
-    });
+    var params = {};
+
+    params.hostname = req.hostname == 'localhost' ? app.dev : app.prod;
+
+    res.render('bookmarklet.js', params);
 });
 server.all('*', function (req, res) {
     var params = {};

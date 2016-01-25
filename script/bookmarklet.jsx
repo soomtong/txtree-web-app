@@ -22,7 +22,7 @@ Add this link button to your browser bookmark area
         var name = <span><span className="glyphicon glyphicon-bookmark" /><span>Save to Txtree</span></span>;
         var link = {
             dev: <a href="javascript:(function(){var el=document.createElement('script');el.setAttribute('src','http://localhost:3031/embed/bookmarklet'),el.setAttribute('id','txtree_embed');document.body.appendChild(el);})();">{name}</a>,
-            live: <a href="javascript:(function(){var el=document.createElement('script');el.setAttribute('src','http://txtree.xyz/embed/bookmarklet');el.setAttribute('id','txtree_embed');document.body.appendChild(el);})();">{name}</a>
+            live: <a href="javascript:(function(){var el=document.createElement('script');el.setAttribute('src','https://txtree.xyz/embed/bookmarklet');el.setAttribute('id','txtree_embed');document.body.appendChild(el);})();">{name}</a>
         };
 
         return (
