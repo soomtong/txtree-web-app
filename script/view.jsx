@@ -195,7 +195,7 @@ var Entry = React.createClass({
         storage.setItem('favorite-list', JSON.stringify(filtered));
     },
     render: function () {
-        var title, feedback, favorite, commend, claim;
+        var title, text, feedback, favorite, commend, claim;
         var data = this.props.data, time = Moment(data.created_at).format('gggg-M-D h:mm:ss a');
 
         if (data.title) {
@@ -228,11 +228,18 @@ var Entry = React.createClass({
             <span className="favorite">{favorite}</span>
         </p>;
 
+        if (!data.theme || data.theme.indexOf('markdown') == -1) {
+            // for non theme, except markdown
+            text = <pre>{data.text || ''}</pre>;
+        } else {
+            text = <ReactMarkdown className="custom-viewer markdown-body" source={data.text || ''}/>;
+        }
+
         return (
             <div className="view">
                 {title}
                 {feedback}
-                <ReactMarkdown className="custom-viewer markdown-body" source={data.text || ''} />
+                {text}
             </div>
         );
     }
